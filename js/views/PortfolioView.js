@@ -209,6 +209,11 @@ class PortfolioView {
     this.elements.projectsContainer.innerHTML = projectCardsHtml;
   }
 
+  /**
+   * Sanitizes raw string values for safe insertion into HTML templates.
+   * @param {string} str - Raw string to escape.
+   * @returns {string} Sanitized HTML entity-encoded string.
+   */
   escapeHtml(str) {
     if (!str) return '';
     return str
@@ -376,6 +381,10 @@ class PortfolioView {
     renderCurrentApp();
   }
 
+  /**
+   * Attaches click event handlers to terminal environment selector tabs.
+   * @param {function(): void} rerender - Callback to re-render selected terminal application.
+   */
   bindTabEvents(rerender) {
     const tabBtns = this.elements.cliLabContainer.querySelectorAll('.cli-tab-btn');
     tabBtns.forEach((btn) => {
@@ -389,6 +398,10 @@ class PortfolioView {
     });
   }
 
+  /**
+   * Boots the in-browser interactive terminal simulator runner for an application.
+   * @param {import('../models/PortfolioModel.js').TerminalApp} app - Active terminal application config.
+   */
   initTerminalSimulator(app) {
     const screen = document.getElementById('cliTerminalScreen');
     const form = document.getElementById('cliTerminalForm');

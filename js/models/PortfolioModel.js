@@ -44,6 +44,19 @@
  */
 
 /**
+ * @typedef {Object} TerminalApp
+ * @property {string} id - Unique terminal application identifier.
+ * @property {string} title - Display title.
+ * @property {string} badge - Architecture/status badge.
+ * @property {string} type - System domain label.
+ * @property {string} summary - Comprehensive engineering summary.
+ * @property {string} command - Terminal launch command.
+ * @property {string[]} tags - Technology stack tags.
+ * @property {string[]} highlights - Key architectural features.
+ * @property {string} codeSnippet - Primary source code demonstration.
+ */
+
+/**
  * @typedef {Object} Experience
  * @property {string} role - Position title and organization.
  * @property {string} period - Active time period and location.
@@ -335,7 +348,7 @@ while (inputMenu !== 4) {
 
   /**
    * Retrieves algorithmic and CLI terminal applications.
-   * @returns {Object[]}
+   * @returns {TerminalApp[]}
    */
   getTerminalApps() {
     return this.terminalApps;

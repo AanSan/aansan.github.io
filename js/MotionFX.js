@@ -21,6 +21,9 @@ class MotionFX {
     this.rafId = null;
   }
 
+  /**
+   * Initializes motion elements, canvas context, event listeners, and animation loop.
+   */
   init() {
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
 
@@ -34,6 +37,10 @@ class MotionFX {
     this.animate();
   }
 
+  /**
+   * Creates laser cursor and background cosmic canvas nodes.
+   * @param {boolean} hasFinePointer - Indicates precision mouse pointer availability.
+   */
   createDomElements(hasFinePointer) {
     // 1. Precise Center Laser Pointer (No trailing outer ring)
     if (hasFinePointer) {
@@ -50,6 +57,9 @@ class MotionFX {
     this.resizeCanvas();
   }
 
+  /**
+   * Populates ambient stardust particle physics models.
+   */
   initCanvas() {
     const w = this.canvas.width;
     const h = this.canvas.height;
@@ -64,17 +74,24 @@ class MotionFX {
         radius: Math.random() * 1.6 + 0.6,
         baseAlpha: Math.random() * 0.4 + 0.15,
         alpha: Math.random() * 0.4 + 0.15,
-        color: i % 3 === 0 ? '99, 102, 241' : (i % 3 === 1 ? '56, 189, 248' : '168, 85, 247')
+        color: i % 3 === 0 ? '99, 102, 241' : (i % 3 === 1 ? '56, 189, 248' : '168, 85, 247'),
       });
     }
   }
 
+  /**
+   * Adjusts canvas pixel dimensions to viewport bounds.
+   */
   resizeCanvas() {
     if (!this.canvas) return;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
   }
 
+  /**
+   * Binds pointer, resize, scroll, and interactive hover event handlers.
+   * @param {boolean} hasFinePointer - Indicates precision pointer availability.
+   */
   bindEvents(hasFinePointer) {
     window.addEventListener('resize', () => {
       this.resizeCanvas();
@@ -370,6 +387,9 @@ class MotionFX {
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
+  /**
+   * Main requestAnimationFrame continuous physics loop for lerp parallax and constellation particles.
+   */
   animate() {
     // 1. Folio-v2 Smooth Inertia Parallax Scroll Animation (Lerp Damping)
     for (let i = 0; i < this.parallaxItems.length; i++) {

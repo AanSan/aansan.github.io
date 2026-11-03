@@ -45,6 +45,19 @@
  */
 
 /**
+ * @typedef {Object} TerminalApp
+ * @property {string} id - Unique terminal application identifier.
+ * @property {string} title - Display title.
+ * @property {string} badge - Architecture/status badge.
+ * @property {string} type - System domain label.
+ * @property {string} summary - Comprehensive engineering summary.
+ * @property {string} command - Terminal launch command.
+ * @property {string[]} tags - Technology stack tags.
+ * @property {string[]} highlights - Key architectural features.
+ * @property {string} codeSnippet - Primary source code demonstration.
+ */
+
+/**
  * @typedef {Object} Experience
  * @property {string} role - Position title and organization.
  * @property {string} period - Active time period and location.
@@ -336,7 +349,7 @@ while (inputMenu !== 4) {
 
   /**
    * Retrieves algorithmic and CLI terminal applications.
-   * @returns {Object[]}
+   * @returns {TerminalApp[]}
    */
   getTerminalApps() {
     return this.terminalApps;
@@ -587,6 +600,11 @@ class PortfolioView {
     this.elements.projectsContainer.innerHTML = projectCardsHtml;
   }
 
+  /**
+   * Sanitizes raw string values for safe insertion into HTML templates.
+   * @param {string} str - Raw string to escape.
+   * @returns {string} Sanitized HTML entity-encoded string.
+   */
   escapeHtml(str) {
     if (!str) return '';
     return str
@@ -754,6 +772,10 @@ class PortfolioView {
     renderCurrentApp();
   }
 
+  /**
+   * Attaches click event handlers to terminal environment selector tabs.
+   * @param {function(): void} rerender - Callback to re-render selected terminal application.
+   */
   bindTabEvents(rerender) {
     const tabBtns = this.elements.cliLabContainer.querySelectorAll('.cli-tab-btn');
     tabBtns.forEach((btn) => {
@@ -767,6 +789,10 @@ class PortfolioView {
     });
   }
 
+  /**
+   * Boots the in-browser interactive terminal simulator runner for an application.
+   * @param {import('../models/PortfolioModel.js').TerminalApp} app - Active terminal application config.
+   */
   initTerminalSimulator(app) {
     const screen = document.getElementById('cliTerminalScreen');
     const form = document.getElementById('cliTerminalForm');
@@ -1363,6 +1389,9 @@ class MotionFX {
     this.rafId = null;
   }
 
+  /**
+   * Initializes motion elements, canvas context, event listeners, and animation loop.
+   */
   init() {
     const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
 
@@ -1376,6 +1405,10 @@ class MotionFX {
     this.animate();
   }
 
+  /**
+   * Creates laser cursor and background cosmic canvas nodes.
+   * @param {boolean} hasFinePointer - Indicates precision mouse pointer availability.
+   */
   createDomElements(hasFinePointer) {
     // 1. Precise Center Laser Pointer (No trailing outer ring)
     if (hasFinePointer) {
@@ -1392,6 +1425,9 @@ class MotionFX {
     this.resizeCanvas();
   }
 
+  /**
+   * Populates ambient stardust particle physics models.
+   */
   initCanvas() {
     const w = this.canvas.width;
     const h = this.canvas.height;
@@ -1406,17 +1442,24 @@ class MotionFX {
         radius: Math.random() * 1.6 + 0.6,
         baseAlpha: Math.random() * 0.4 + 0.15,
         alpha: Math.random() * 0.4 + 0.15,
-        color: i % 3 === 0 ? '99, 102, 241' : (i % 3 === 1 ? '56, 189, 248' : '168, 85, 247')
+        color: i % 3 === 0 ? '99, 102, 241' : (i % 3 === 1 ? '56, 189, 248' : '168, 85, 247'),
       });
     }
   }
 
+  /**
+   * Adjusts canvas pixel dimensions to viewport bounds.
+   */
   resizeCanvas() {
     if (!this.canvas) return;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
   }
 
+  /**
+   * Binds pointer, resize, scroll, and interactive hover event handlers.
+   * @param {boolean} hasFinePointer - Indicates precision pointer availability.
+   */
   bindEvents(hasFinePointer) {
     window.addEventListener('resize', () => {
       this.resizeCanvas();
@@ -1712,6 +1755,9 @@ class MotionFX {
     observer.observe(document.body, { childList: true, subtree: true });
   }
 
+  /**
+   * Main requestAnimationFrame continuous physics loop for lerp parallax and constellation particles.
+   */
   animate() {
     // 1. Folio-v2 Smooth Inertia Parallax Scroll Animation (Lerp Damping)
     for (let i = 0; i < this.parallaxItems.length; i++) {
