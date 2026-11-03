@@ -823,13 +823,15 @@ class PortfolioView {
         screen.appendChild(div);
         screen.scrollTop = screen.scrollHeight;
       },
-      setPrompt(label, placeholder) {
+      setPrompt(label, placeholder, shouldFocus = false) {
         if (promptLabel) promptLabel.textContent = label;
         if (input) {
           input.placeholder = placeholder;
           input.value = '';
-          if (typeof input.focus === 'function') {
-            try { input.focus(); } catch (_) {}
+          if (shouldFocus && typeof input.focus === 'function') {
+            try {
+              input.focus({ preventScroll: true });
+            } catch (_) {}
           }
         }
       },
