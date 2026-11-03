@@ -1,4 +1,6 @@
 (function() {
+
+/* === Bundled: js/models/PortfolioModel.js === */
 /**
  * @fileoverview Data models for the developer portfolio following MVC pattern.
  */
@@ -389,6 +391,8 @@ while (inputMenu !== 4) {
   }
 }
 
+
+/* === Bundled: js/views/PortfolioView.js === */
 /**
  * @fileoverview View module rendering DOM components according to UI state.
  */
@@ -616,6 +620,51 @@ class PortfolioView {
   }
 
   /**
+   * Animates element text with a hacker / cipher scramble decryption effect.
+   * Characters rapidly randomize and decrypt character-by-character into the target string.
+   * @param {HTMLElement} el - Target DOM node.
+   * @param {string} targetText - Final plain text to reveal.
+   * @param {number} [duration=1500] - Animation duration in milliseconds.
+   */
+  scrambleText(el, targetText, duration = 1500) {
+    if (!el || !targetText) return;
+    const chars = '01#$@%&*<>{}[]/\\+=~^?0123456789ABCDEF!_';
+    const startTimestamp = performance.now();
+
+    if (el._scrambleRaf) {
+      cancelAnimationFrame(el._scrambleRaf);
+    }
+
+    const animate = (now) => {
+      const elapsed = now - startTimestamp;
+      const progress = Math.min(1, elapsed / duration);
+      const revealedLength = Math.floor(progress * targetText.length);
+
+      let result = '';
+      for (let i = 0; i < targetText.length; i++) {
+        if (i < revealedLength) {
+          result += targetText[i];
+        } else if (targetText[i] === ' ' || targetText[i] === '\n') {
+          result += targetText[i];
+        } else {
+          const randChar = chars[Math.floor(Math.random() * chars.length)];
+          result += `<span class="cipher-char">${randChar}</span>`;
+        }
+      }
+
+      el.innerHTML = result;
+
+      if (progress < 1) {
+        el._scrambleRaf = requestAnimationFrame(animate);
+      } else {
+        el.textContent = targetText;
+      }
+    };
+
+    el._scrambleRaf = requestAnimationFrame(animate);
+  }
+
+  /**
    * Renders the interactive in-browser Terminal & CLI Lab.
    * @param {Object[]} terminalApps - List of terminal CLI applications.
    */
@@ -625,166 +674,239 @@ class PortfolioView {
     this.terminalApps = terminalApps;
     this.selectedAppIndex = 0;
 
-    const renderCurrentApp = () => {
-      const app = this.terminalApps[this.selectedAppIndex];
+    const app = this.terminalApps[this.selectedAppIndex];
 
-      const tabsHtml = this.terminalApps.map((item, idx) => {
-        const isActive = idx === this.selectedAppIndex;
-        return `
-          <button 
-            type="button" 
-            class="cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
-              isActive 
-                ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
-            }"
-            data-app-index="${idx}">
-            <span class="text-indigo-400 mr-1.5">0${idx + 1}.</span>${item.title.split(' ')[0]} ${item.title.split(' ')[1] || ''}
-          </button>
-        `;
-      }).join('');
+    const tabsHtml = this.terminalApps.map((item, idx) => {
+      const isActive = idx === this.selectedAppIndex;
+      return `
+        <button 
+          type="button" 
+          class="cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
+            isActive 
+              ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
+          }"
+          data-app-index="${idx}">
+          <span class="text-indigo-400 mr-1.5">0${idx + 1}.</span>${item.title.split(' ')[0]} ${item.title.split(' ')[1] || ''}
+        </button>
+      `;
+    }).join('');
 
-      const highlightsHtml = app.highlights.map(hl => `
-        <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
-          <span>${hl}</span>
-        </li>
-      `).join('');
+    const highlightsHtml = app.highlights.map(hl => `
+      <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+        <span>${hl}</span>
+      </li>
+    `).join('');
 
-      const tagsHtml = app.tags.map(tag => `
-        <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-slate-900/90 text-slate-300 border border-slate-700/60">${tag}</span>
-      `).join('');
+    const tagsHtml = app.tags.map(tag => `
+      <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-slate-900/90 text-slate-300 border border-slate-700/60">${tag}</span>
+    `).join('');
 
-      const labCard = `
-        <article class="code-preview-card bento-card p-6 sm:p-9 bg-grid-pattern" data-parallax-speed="0.01">
-          
-          <!-- App Switcher Tabs -->
-          <div class="flex flex-wrap items-center gap-2 mb-8 border-b border-slate-800/80 pb-4">
-            <span class="text-xs font-mono text-slate-400 mr-2 flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>Select Environment:</span>
-            </span>
+    const labCard = `
+      <article class="code-preview-card bento-card p-6 sm:p-9 bg-grid-pattern" data-parallax-speed="0.01">
+        
+        <!-- App Switcher Tabs -->
+        <div class="flex flex-wrap items-center gap-2 mb-8 border-b border-slate-800/80 pb-4">
+          <span class="text-xs font-mono text-slate-400 mr-2 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Select Environment:</span>
+          </span>
+          <div id="cliTabsGroup" class="flex flex-wrap items-center gap-2">
             ${tabsHtml}
           </div>
+        </div>
 
-          <!-- Main Dual Column Display -->
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
-            
-            <!-- Column 1: Live Interactive Terminal Console (lg:col-span-6) -->
-            <div class="lg:col-span-6 flex flex-col">
-              <div class="glass-squircle-frame relative w-full h-[470px] flex flex-col justify-between shadow-2xl border border-white/10">
-                
-                <!-- Terminal Top Bar -->
-                <div class="h-10 px-4 bg-slate-900/90 backdrop-blur-md flex items-center justify-between border-b border-white/10 select-none z-20 shrink-0">
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm border border-amber-600/50"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/50"></span>
-                    <span class="text-[11px] font-mono text-slate-400 ml-2">bash - ${app.command}</span>
-                  </div>
-                  <button id="cliResetBtn" type="button" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50" title="Restart simulation">
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                    <span>Restart</span>
-                  </button>
+        <!-- Main Dual Column Display -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          
+          <!-- Column 1: Live Interactive Terminal Console (lg:col-span-6) -->
+          <div class="lg:col-span-6 flex flex-col">
+            <div class="glass-squircle-frame relative w-full h-[470px] flex flex-col justify-between shadow-2xl border border-white/10">
+              
+              <!-- Terminal Top Bar -->
+              <div class="h-10 px-4 bg-slate-900/90 backdrop-blur-md flex items-center justify-between border-b border-white/10 select-none z-20 shrink-0">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm border border-amber-600/50"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/50"></span>
+                  <span id="cliTerminalTitle" class="text-[11px] font-mono text-slate-400 ml-2">bash - ${app.command}</span>
                 </div>
-
-                <!-- Terminal Output Screen -->
-                <div id="cliTerminalScreen" class="flex-1 p-4 bg-[#060913] font-mono text-xs text-slate-200 overflow-y-auto space-y-1.5 selection:bg-indigo-600 selection:text-white whitespace-pre-wrap">
-                  <!-- Dynamic logs injected by terminal runner -->
-                </div>
-
-                <!-- Terminal Interactive Prompt Input Bar -->
-                <form id="cliTerminalForm" class="p-3 bg-slate-900/90 backdrop-blur-md border-t border-white/10 flex items-center gap-2 select-none z-20 shrink-0">
-                  <span id="cliPromptLabel" class="text-xs font-mono text-emerald-400 shrink-0">&gt;</span>
-                  <input 
-                    type="text" 
-                    id="cliTerminalInput" 
-                    class="flex-1 bg-slate-950/80 border border-slate-700/70 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                    placeholder="Enter input..."
-                    autocomplete="off"
-                    spellcheck="false" />
-                  <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-semibold transition-colors shrink-0">
-                    Send
-                  </button>
-                </form>
-
-                <!-- Interactive Quick Shortcuts -->
-                <div id="cliShortcutsBar" class="px-3 py-2 bg-slate-950/90 border-t border-white/5 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
-                  <!-- Dynamic shortcuts for fast clicking -->
-                </div>
-
+                <button id="cliResetBtn" type="button" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50" title="Restart simulation">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  <span>Restart</span>
+                </button>
               </div>
-            </div>
 
-            <!-- Column 2: Architectural Details & Code Inspector (lg:col-span-6) -->
-            <div class="lg:col-span-6 flex flex-col justify-between">
-              <div>
-                <!-- Badge -->
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-3 shadow-sm">
-                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>${app.badge}</span>
-                </div>
-
-                <!-- Title & Subtitle -->
-                <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">${app.title}</h3>
-                <p class="text-xs sm:text-sm font-mono text-brand-400 font-medium mb-4">${app.type}</p>
-
-                <!-- Summary Description -->
-                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
-                  ${app.summary}
-                </p>
-
-                <!-- Architectural Highlights -->
-                <ul class="space-y-2 mb-5">
-                  ${highlightsHtml}
-                </ul>
-
-                <!-- Terminal Code Inspection Box -->
-                <div class="terminal-window p-4 mb-5 shadow-inner">
-                  <div class="flex items-center justify-between mb-2.5 border-b border-slate-800/80 pb-2">
-                    <div class="flex items-center gap-2">
-                      <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block shadow-sm"></span>
-                      <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-sm"></span>
-                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
-                      <span class="text-[11px] font-mono text-slate-400 ml-1.5">${app.id === 'calendar-cli' ? 'calenderModel.js' : app.id === 'tictactoe-cli' ? 'tictactoe.js' : 'atm.js'}</span>
-                    </div>
-                    <span class="text-[10px] font-mono text-indigo-400 font-semibold">ES6+ CLI</span>
-                  </div>
-                  <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 max-h-[160px] overflow-y-auto"><code>${this.escapeHtml(app.codeSnippet)}</code></pre>
-                </div>
-
-                <!-- Tags Stack -->
-                <div class="flex flex-wrap gap-2">
-                  ${tagsHtml}
-                </div>
+              <!-- Terminal Output Screen -->
+              <div id="cliTerminalScreen" class="flex-1 p-4 bg-[#060913] font-mono text-xs text-slate-200 overflow-y-auto space-y-1.5 selection:bg-indigo-600 selection:text-white whitespace-pre-wrap">
+                <!-- Dynamic logs injected by terminal runner -->
               </div>
-            </div>
 
+              <!-- Terminal Interactive Prompt Input Bar -->
+              <form id="cliTerminalForm" class="p-3 bg-slate-900/90 backdrop-blur-md border-t border-white/10 flex items-center gap-2 select-none z-20 shrink-0">
+                <span id="cliPromptLabel" class="text-xs font-mono text-emerald-400 shrink-0">&gt;</span>
+                <input 
+                  type="text" 
+                  id="cliTerminalInput" 
+                  class="flex-1 bg-slate-950/80 border border-slate-700/70 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                  placeholder="Enter input..."
+                  autocomplete="off"
+                  spellcheck="false" />
+                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-semibold transition-colors shrink-0">
+                  Send
+                </button>
+              </form>
+
+              <!-- Interactive Quick Shortcuts -->
+              <div id="cliShortcutsBar" class="px-3 py-2 bg-slate-950/90 border-t border-white/5 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                <!-- Dynamic shortcuts for fast clicking -->
+              </div>
+
+            </div>
           </div>
-        </article>
-      `;
 
-      this.elements.cliLabContainer.innerHTML = labCard;
-      this.initTerminalSimulator(app);
-      this.bindTabEvents(renderCurrentApp);
-    };
+          <!-- Column 2: Architectural Details & Code Inspector (lg:col-span-6) -->
+          <div class="lg:col-span-6 flex flex-col justify-between">
+            <div>
+              <!-- Badge -->
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-3 shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="cliAppBadge">${app.badge}</span>
+              </div>
 
-    renderCurrentApp();
+              <!-- Title & Subtitle -->
+              <h3 id="cliAppTitle" class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">${app.title}</h3>
+              <p id="cliAppType" class="text-xs sm:text-sm font-mono text-brand-400 font-medium mb-4">${app.type}</p>
+
+              <!-- Summary Description -->
+              <p id="cliAppSummary" class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+                ${app.summary}
+              </p>
+
+              <!-- Architectural Highlights -->
+              <ul id="cliAppHighlights" class="space-y-2 mb-5">
+                ${highlightsHtml}
+              </ul>
+
+              <!-- Terminal Code Inspection Box -->
+              <div id="cliCodeWindow" class="terminal-window p-4 mb-5 shadow-inner">
+                <div class="flex items-center justify-between mb-2.5 border-b border-slate-800/80 pb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block shadow-sm"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-sm"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
+                    <span id="cliCodeFile" class="text-[11px] font-mono text-slate-400 ml-1.5">${app.id === 'calendar-cli' ? 'calenderModel.js' : app.id === 'tictactoe-cli' ? 'tictactoe.js' : 'atm.js'}</span>
+                  </div>
+                  <span class="text-[10px] font-mono text-indigo-400 font-semibold">ES6+ CLI</span>
+                </div>
+                <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 max-h-[160px] overflow-y-auto"><code id="cliCodeContent">${this.escapeHtml(app.codeSnippet)}</code></pre>
+              </div>
+
+              <!-- Tags Stack -->
+              <div id="cliAppTags" class="flex flex-wrap gap-2">
+                ${tagsHtml}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </article>
+    `;
+
+    this.elements.cliLabContainer.innerHTML = labCard;
+    this.initTerminalSimulator(app, false);
+    this.bindTabEvents();
+  }
+
+  /**
+   * Switches the active terminal lab environment with cyber cipher decryption animations.
+   * @param {number} newIndex - Index of newly selected terminal app.
+   */
+  switchEnvironment(newIndex) {
+    if (newIndex === this.selectedAppIndex || !this.terminalApps[newIndex]) return;
+
+    this.selectedAppIndex = newIndex;
+    const app = this.terminalApps[newIndex];
+
+    // 1. Update Tab Buttons styling
+    const tabBtns = this.elements.cliLabContainer.querySelectorAll('.cli-tab-btn');
+    tabBtns.forEach((btn, idx) => {
+      const isActive = idx === newIndex;
+      btn.className = `cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
+        isActive 
+          ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
+          : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
+      }`;
+    });
+
+    // 2. Cipher Decryption Animation on Right Column (1.5s deliberate pacing)
+    const titleEl = document.getElementById('cliAppTitle');
+    const badgeEl = document.getElementById('cliAppBadge');
+    const typeEl = document.getElementById('cliAppType');
+    const summaryEl = document.getElementById('cliAppSummary');
+    const termTitleEl = document.getElementById('cliTerminalTitle');
+
+    this.scrambleText(titleEl, app.title, 1500);
+    this.scrambleText(badgeEl, app.badge, 1200);
+    this.scrambleText(typeEl, app.type, 1350);
+    this.scrambleText(summaryEl, app.summary, 1500);
+    this.scrambleText(termTitleEl, `bash - ${app.command}`, 1200);
+
+    // 3. Update Highlights with subtle fade synchronized with cipher
+    const highlightsEl = document.getElementById('cliAppHighlights');
+    if (highlightsEl) {
+      highlightsEl.style.opacity = '0';
+      highlightsEl.style.transition = 'opacity 0.4s ease';
+      setTimeout(() => {
+        highlightsEl.innerHTML = app.highlights.map(hl => `
+          <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-300">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"></span>
+            <span>${hl}</span>
+          </li>
+        `).join('');
+        highlightsEl.style.opacity = '1';
+      }, 400);
+    }
+
+    // 4. Update Code Box with cyber glitch effect
+    const codeWindow = document.getElementById('cliCodeWindow');
+    const codeFile = document.getElementById('cliCodeFile');
+    const codeContent = document.getElementById('cliCodeContent');
+
+    if (codeWindow) {
+      codeWindow.classList.remove('cipher-glitch');
+      void codeWindow.offsetWidth; // Force reflow
+      codeWindow.classList.add('cipher-glitch');
+    }
+    if (codeFile) {
+      codeFile.textContent = app.id === 'calendar-cli' ? 'calenderModel.js' : app.id === 'tictactoe-cli' ? 'tictactoe.js' : 'atm.js';
+    }
+    if (codeContent) {
+      codeContent.innerHTML = this.escapeHtml(app.codeSnippet);
+    }
+
+    // 5. Update Tags
+    const tagsEl = document.getElementById('cliAppTags');
+    if (tagsEl) {
+      tagsEl.innerHTML = app.tags.map(tag => `
+        <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-slate-900/90 text-slate-300 border border-slate-700/60">${tag}</span>
+      `).join('');
+    }
+
+    // 6. Switch Terminal Simulator with Cipher Handshake
+    this.initTerminalSimulator(app, true);
   }
 
   /**
    * Attaches click event handlers to terminal environment selector tabs.
-   * @param {function(): void} rerender - Callback to re-render selected terminal application.
    */
-  bindTabEvents(rerender) {
+  bindTabEvents() {
     const tabBtns = this.elements.cliLabContainer.querySelectorAll('.cli-tab-btn');
     tabBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
         const idx = parseInt(btn.dataset.appIndex, 10);
-        if (idx !== this.selectedAppIndex) {
-          this.selectedAppIndex = idx;
-          rerender();
-        }
+        this.switchEnvironment(idx);
       });
     });
   }
@@ -792,8 +914,9 @@ class PortfolioView {
   /**
    * Boots the in-browser interactive terminal simulator runner for an application.
    * @param {import('../models/PortfolioModel.js').TerminalApp} app - Active terminal application config.
+   * @param {boolean} [isSwitch=false] - Whether triggered by an environment tab switch.
    */
-  initTerminalSimulator(app) {
+  initTerminalSimulator(app, isSwitch = false) {
     const screen = document.getElementById('cliTerminalScreen');
     const form = document.getElementById('cliTerminalForm');
     const input = document.getElementById('cliTerminalInput');
@@ -1155,7 +1278,35 @@ class PortfolioView {
     }
 
     if (runner) {
-      runner.start();
+      if (isSwitch) {
+        term.clear();
+        const hex1 = `0x${Math.floor(Math.random() * 0xFFFFF).toString(16).toUpperCase()}`;
+        const hex2 = `0x${Math.floor(Math.random() * 0xFFFFF).toString(16).toUpperCase()}`;
+        term.log('system', '[SYSTEM] DE-INITIALIZING CONTEXT BUFFER...');
+
+        if (this.cipherSwitchTimers && Array.isArray(this.cipherSwitchTimers)) {
+          this.cipherSwitchTimers.forEach(timerId => clearTimeout(timerId));
+        }
+        this.cipherSwitchTimers = [];
+
+        this.cipherSwitchTimers.push(setTimeout(() => {
+          term.log('info', `[CIPHER] DECRYPTING RUNTIME: ${hex1} -> ${hex2}`);
+        }, 350));
+
+        this.cipherSwitchTimers.push(setTimeout(() => {
+          term.log('prompt', `[HANDSHAKE] INITIALIZING ${app.command}...`);
+        }, 800));
+
+        this.cipherSwitchTimers.push(setTimeout(() => {
+          term.log('success', '[READY] SECURE ENVIRONMENT MOUNTED (100% OK)');
+        }, 1250));
+
+        this.cipherSwitchTimers.push(setTimeout(() => {
+          runner.start();
+        }, 1500));
+      } else {
+        runner.start();
+      }
 
       form.onsubmit = (e) => {
         e.preventDefault();
@@ -1300,6 +1451,8 @@ class PortfolioView {
   }
 }
 
+
+/* === Bundled: js/controllers/PortfolioController.js === */
 /**
  * @fileoverview Controller module handling business logic and mediating between Model and View.
  */
@@ -1368,6 +1521,8 @@ class PortfolioController {
   }
 }
 
+
+/* === Bundled: js/MotionFX.js === */
 /**
  * @fileoverview Creative Motion & Parallax FX Engine (Bento Glassmorphism 2.0).
  * Features:
@@ -1836,11 +1991,27 @@ class MotionFX {
   }
 }
 
+
+/* === Bundled: js/main.js === */
+﻿/**
+ * @fileoverview Main entry point initializing the Portfolio MVC application.
+ */
+
+
+
+
+/**
+ * Initializes and starts application when DOM is ready.
+ * @returns {void}
+ */
 const bootstrap = () => {
   const model = new PortfolioModel();
   const view = new PortfolioView();
   const controller = new PortfolioController(model, view);
+
   controller.init();
+
+  // Initialize creative Parallax & Hover Mouse Engine
   const motion = new MotionFX();
   motion.init();
 };
@@ -1850,5 +2021,6 @@ if (document.readyState === 'loading') {
 } else {
   bootstrap();
 }
+
 
 })();
