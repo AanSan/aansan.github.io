@@ -30,6 +30,7 @@ class PortfolioController {
   renderAll() {
     this.view.renderHero(this.model.getProfile());
     this.view.renderProjects(this.model.getProjects());
+    this.view.renderTerminalLab(this.model.getTerminalApps());
     this.view.renderSkills(this.model.getSkillCategories());
     this.view.renderCertifications(this.model.getCertifications());
     this.view.renderExperiences(this.model.getExperiences());

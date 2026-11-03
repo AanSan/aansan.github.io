@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
@@ -41,92 +41,163 @@
   <!-- Background Glow FX -->
   <div class="fixed inset-0 pointer-events-none gradient-glow -z-10"></div>
 
-  <!-- Parallax Floating Visual Orbs -->
-  <div class="parallax-orb w-96 h-96 bg-indigo-600/15 top-10 -left-20" data-parallax-speed="0.25"></div>
-  <div class="parallax-orb w-80 h-80 bg-violet-600/15 top-[600px] -right-20" data-parallax-speed="-0.2"></div>
-  <div class="parallax-orb w-96 h-96 bg-cyan-600/10 top-[1300px] -left-32" data-parallax-speed="0.18"></div>
+  <!-- Parallax Floating Visual Orbs (Gentle ambient drift) -->
+  <div class="parallax-orb w-96 h-96 bg-indigo-600/15 top-10 -left-20" data-parallax-speed="0.06"></div>
+  <div class="parallax-orb w-80 h-80 bg-violet-600/15 top-[600px] -right-20" data-parallax-speed="-0.05"></div>
+  <div class="parallax-orb w-96 h-96 bg-cyan-600/10 top-[1300px] -left-32" data-parallax-speed="0.04"></div>
 
-  <!-- Navigation Bar -->
-  <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0b0f19]/80 border-b border-slate-800/80">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <a href="#hero" class="font-mono text-sm sm:text-base font-semibold tracking-tight text-white hover:text-brand-400 transition-colors">
-        noviyan<span class="text-brand-500">.dev</span>
+  <!-- Sticky Header Bar -->
+  <header class="sticky top-0 z-50 w-full backdrop-blur-xl bg-[#0b0f19]/90 border-b border-slate-800/80 transition-all">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+      <a href="#hero" class="font-mono text-sm sm:text-base font-semibold tracking-tight text-white hover:text-brand-400 transition-colors flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>noviyan<span class="text-brand-400">.dev</span></span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
-        <a href="#about" class="hover:text-white transition-colors">About</a>
-        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
-        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
-        <a href="#certifications" class="hover:text-white transition-colors">Certifications</a>
+      <nav class="hidden md:flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-medium text-slate-300">
+        <a href="#projects" class="nav-link px-3 py-1.5 rounded-lg hover:text-white transition-all">Projects</a>
+        <a href="#cli-lab" class="nav-link px-3 py-1.5 rounded-lg hover:text-white transition-all">CLI Lab</a>
+        <a href="#skills" class="nav-link px-3 py-1.5 rounded-lg hover:text-white transition-all">Skills</a>
+        <a href="#certifications" class="nav-link px-3 py-1.5 rounded-lg hover:text-white transition-all">Certifications</a>
+        <a href="#about" class="nav-link px-3 py-1.5 rounded-lg hover:text-white transition-all">Experience</a>
       </nav>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-white transition-colors" title="GitHub Profile">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
           </svg>
         </a>
-        <a href="mailto:aansan26@gmail.com" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-sm">
+        <a href="mailto:aansan26@gmail.com" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-sm">
           <span>Contact Me</span>
         </a>
       </div>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-24 py-12">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-20 py-6 sm:py-10">
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative pt-6 sm:pt-14 pb-8" data-parallax-speed="0.04">
-      <div id="heroAvailability" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700/60 text-xs font-mono text-brand-400 mb-6">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-        Available for Remote Software Engineer Roles
-      </div>
+    <!-- Hero Section (Bento Grid 2.0) -->
+    <section id="hero" class="relative pt-2 sm:pt-4 scroll-mt-16 sm:scroll-mt-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        
+        <!-- Bento Main Unit (Span 8) -->
+        <div class="lg:col-span-8 card-glass bento-card p-6 sm:p-9 flex flex-col justify-between" data-parallax-speed="0.012">
+          <div>
+            <div id="heroAvailability" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-6 shadow-sm">
+              <span class="radar-live-dot"></span>
+              <span>Available for Remote Roles</span>
+            </div>
 
-      <h1 id="heroTitle" class="holo-text text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
-        Noviyan Hogy Andika Suryanto
-      </h1>
+            <h1 id="heroTitle" class="holo-text text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight pb-1 mb-5">
+              Noviyan Hogy Andika Suryanto
+            </h1>
 
-      <p id="heroHeadline" class="text-xl sm:text-2xl font-medium text-slate-300 max-w-3xl mb-4 leading-relaxed">
-        <span class="text-white">Junior Software Engineer</span> focused on modern JavaScript, clean front-end architecture, and AI-accelerated tooling.
-      </p>
+            <p id="heroHeadline" class="text-lg sm:text-xl font-medium text-slate-300 max-w-2xl mb-4 leading-relaxed">
+              <span class="text-white">Junior Software Engineer</span> focused on modern JavaScript, clean front-end architecture, and AI-accelerated tooling.
+            </p>
 
-      <p id="heroBio" class="text-base text-slate-400 max-w-2xl leading-relaxed mb-8">
-        Combining rigorous discipline from public sector data integrity with self-driven software engineering. Actively solving real-world friction through browser utilities, web performance optimization, and pragmatic development.
-      </p>
+            <p id="heroBio" class="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed mb-8">
+              Combining rigorous discipline from public sector data integrity with self-driven software engineering. Actively solving real-world friction through browser utilities, web performance optimization, and pragmatic development.
+            </p>
+          </div>
 
-      <!-- Action Buttons -->
-      <div class="flex flex-wrap items-center gap-3">
-        <a href="#projects" class="px-5 py-2.5 rounded-xl bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-colors shadow">
-          Explore Projects
-        </a>
-        <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl card-glass text-slate-200 font-medium text-sm hover:text-white transition-colors flex items-center gap-2">
-          <span>GitHub Activity</span>
-          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-        </a>
-        <button id="copyEmailBtn" class="px-4 py-2.5 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 text-sm font-mono flex items-center gap-2 transition-all" type="button">
-          <span id="copyEmailText">aansan26@gmail.com</span>
-          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-        </button>
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800/60">
+            <a href="#projects" class="px-5 py-2.5 rounded-xl bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-colors shadow">
+              Explore Projects
+            </a>
+            <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-medium text-sm transition-colors flex items-center gap-2 border border-slate-700/60">
+              <span>GitHub Activity</span>
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+            <button id="copyEmailBtn" class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-slate-500 text-slate-300 text-sm font-mono flex items-center gap-2 transition-all" type="button">
+              <span id="copyEmailText">aansan26@gmail.com</span>
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bento Aside Modules (Span 4) -->
+        <div class="lg:col-span-4 flex flex-col gap-6">
+          
+          <!-- Bento Widget 1: Radar Live Status & Clock -->
+          <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="0.015">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono uppercase tracking-widest text-slate-400">Live Status</span>
+              <span class="radar-live-dot"></span>
+            </div>
+
+            <div class="space-y-3">
+              <div class="text-2xl font-bold text-white tracking-tight">Active &amp; Ready</div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Open to Remote Software Engineer roles, frontend development, and workflow automation tooling.
+              </p>
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
+              <span class="text-slate-400">Timezone</span>
+              <span id="heroLiveClock" class="text-brand-300 font-semibold">UTC+7 • Jakarta (WIB)</span>
+            </div>
+          </div>
+
+          <!-- Bento Widget 2: Engineering Philosophy & Architecture -->
+          <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="-0.012">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Pillars</span>
+              <span class="text-xs font-mono text-slate-500">v2.0</span>
+            </div>
+
+            <div class="space-y-2 mb-4">
+              <div class="text-lg font-bold text-white">Pragmatic &amp; Performant</div>
+              <p class="text-xs text-slate-400 leading-relaxed">
+                Zero-bloat philosophy. High maintainability using clean MVC patterns and native browser APIs.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-800/80">
+              <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-indigo-950/60 text-indigo-300 border border-indigo-800/40">Vanilla JS</span>
+              <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-sky-950/60 text-sky-300 border border-sky-800/40">Modular MVC</span>
+              <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-violet-950/60 text-violet-300 border border-violet-800/40">AI Accelerated</span>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
-    <!-- Featured Projects Section -->
-    <section id="projects" class="space-y-8">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+    <!-- Featured Projects Section (Alternating Dual Flagship Showcase) -->
+    <section id="projects" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] py-6 sm:py-10">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
-          <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Portfolio Work</span>
-          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Featured Projects</h2>
+          <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Featured Showcase</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Flagship Applications</h2>
         </div>
-        <p class="text-sm text-slate-400">Directly built to automate workflows &amp; deliver performant web interfaces.</p>
+        <p class="text-sm text-slate-400">Live interactive mobile preview &amp; architectural code inspection.</p>
       </div>
 
-      <!-- Dynamically Rendered by View -->
-      <div id="projectsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+      <!-- Dynamically Rendered by View (Alternating Zigzag Showcase) -->
+      <div id="projectsContainer" class="space-y-12 sm:space-y-16"></div>
+    </section>
+
+    <!-- Terminal & Algorithmic Engineering Lab (Interactive CLI Simulator & Code Inspector) -->
+    <section id="cli-lab" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] py-6 sm:py-10">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-4">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Systems &amp; Algorithms</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Terminal &amp; CLI Lab</h2>
+        </div>
+        <p class="text-sm text-slate-400">Interactive in-browser Node.js console simulations &amp; architecture inspection.</p>
+      </div>
+
+      <!-- Dynamically Rendered by View (Interactive Terminal Simulator & Architecture Inspector) -->
+      <div id="cliLabContainer"></div>
     </section>
 
     <!-- Technical Skills Section -->
-    <section id="skills" class="space-y-8">
-      <div class="border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+    <section id="skills" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem]">
+      <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Capabilities</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Technical Skills &amp; Stack</h2>
       </div>
@@ -136,8 +207,8 @@
     </section>
 
     <!-- Verified Certifications -->
-    <section id="certifications" class="space-y-8">
-      <div class="border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+    <section id="certifications" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem]">
+      <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Credentials</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Verified Certifications</h2>
       </div>
@@ -147,14 +218,14 @@
     </section>
 
     <!-- Professional Background & Education -->
-    <section id="about" class="space-y-6">
-      <div class="border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+    <section id="about" class="space-y-6 scroll-mt-16 sm:scroll-mt-[4.5rem]">
+      <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Background</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Experience &amp; Foundation</h2>
       </div>
 
       <!-- Dynamically Rendered by View -->
-      <div id="experienceContainer" class="card-glass rounded-2xl p-6 sm:p-7 space-y-6"></div>
+      <div id="experienceContainer" class="card-glass bento-card p-6 sm:p-8 space-y-6" data-parallax-speed="0.01"></div>
     </section>
 
   </main>
@@ -171,7 +242,7 @@
     </div>
   </footer>
 
-  <!-- Application Entry Point (ES Module) -->
-  <script type="module" src="./js/main.js"></script>
+  <!-- Application Entry Point (Unified Bundle supporting file:// and web servers) -->
+  <script src="./js/bundle.js"></script>
 </body>
 </html>

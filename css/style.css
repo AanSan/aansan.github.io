@@ -2,11 +2,34 @@
    Base Styles & Overrides
    ========================================================================== */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: #0b0f19;
   color: #e2e8f0;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-x: hidden;
+}
+
+/* Header & Nav Link Styling */
+.nav-link {
+  color: #94a3b8;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.active {
+  color: #ffffff;
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(129, 140, 248, 0.4);
+  box-shadow: 0 0 14px -2px rgba(99, 102, 241, 0.35);
 }
 
 /* Background radial glow effect */
@@ -24,125 +47,160 @@ body {
   z-index: -5;
 }
 
-/* Interactive spotlight mesh that follows cursor */
-.mouse-spotlight {
+/* Custom Laser Dot Cursor (Sleek, Centered, No Trailing Ring) */
+@media (pointer: fine) {
+  body, a, button, [role="button"] {
+    cursor: none !important;
+  }
+}
+
+.custom-laser-dot {
   position: fixed;
   top: 0;
   left: 0;
-  width: 600px;
-  height: 600px;
-  margin-left: -300px;
-  margin-top: -300px;
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%);
   pointer-events: none;
-  z-index: 0;
-  mix-blend-mode: screen;
-  filter: blur(20px);
-  will-change: transform;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 0 4px #ffffff,
+    0 0 8px #38bdf8,
+    0 0 16px rgba(56, 189, 248, 0.85),
+    0 0 25px rgba(99, 102, 241, 0.5);
+  transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.2s ease;
   opacity: 0;
-  transition: opacity 0.5s ease-out;
+  will-change: transform;
 }
 
-/* Custom Fluid Custom Cursor */
-.custom-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  background: #818cf8;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background-color 0.2s;
-  box-shadow: 0 0 10px #6366f1, 0 0 20px #818cf8;
+body.cursor-hover .custom-laser-dot {
+  transform: translate(-50%, -50%) scale(1.75);
+  box-shadow: 
+    0 0 6px #ffffff,
+    0 0 12px #38bdf8,
+    0 0 22px rgba(56, 189, 248, 1),
+    0 0 35px rgba(129, 140, 248, 0.8);
 }
 
-.custom-cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 36px;
-  height: 36px;
-  border: 1.5px solid rgba(129, 140, 248, 0.45);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), height 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), border-color 0.3s;
-  backdrop-filter: blur(1px);
-}
+/* ==========================================================================
+   iOS Liquid Glass 3D Hover & Glassmorphism 2.0
+   ========================================================================== */
 
-body.cursor-hover .custom-cursor-ring {
-  width: 58px;
-  height: 58px;
-  border-color: rgba(99, 102, 241, 0.9);
-  background: rgba(99, 102, 241, 0.08);
-}
-
-body.cursor-hover .custom-cursor-dot {
-  width: 4px;
-  height: 4px;
-  background: #38bdf8;
-}
-
-/* Glassmorphism card surface with dynamic 3D tilt & spotlight */
-.card-glass {
+.card-glass,
+.code-preview-card {
   position: relative;
-  background: rgba(17, 24, 39, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(13, 20, 36, 0.72);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px -15px rgba(0, 0, 0, 0.65),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.16),
+    inset 0 0 20px 0 rgba(255, 255, 255, 0.02);
   transform-style: preserve-3d;
   will-change: transform;
   overflow: hidden;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dynamic Radial Border Spotlight on Hover */
-.card-glass::before {
+/* iOS Liquid Specular Highlight following exact mouse coordinates */
+.card-glass::before,
+.code-preview-card::before {
   content: "";
   position: absolute;
   inset: -1px;
   border-radius: inherit;
   background: radial-gradient(
-    450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(129, 140, 248, 0.35),
-    transparent 60%
+    420px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(165, 180, 252, 0.22) 22%,
+    rgba(99, 102, 241, 0.1) 48%,
+    transparent 68%
   );
   opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   z-index: 1;
+  mix-blend-mode: screen;
 }
 
-/* Dynamic Inner Reflection Glow */
-.card-glass::after {
+/* Liquid Caustic Prism / Refractive Glass Ambient Glow */
+.card-glass::after,
+.code-preview-card::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, 0.06),
+    560px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    rgba(56, 189, 248, 0.18) 0%,
+    rgba(129, 140, 248, 0.08) 38%,
     transparent 70%
   );
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
   z-index: 2;
+  mix-blend-mode: overlay;
+}
+
+.card-glass:hover,
+.code-preview-card:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.75),
+    0 0 35px -8px rgba(99, 102, 241, 0.32),
+    inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.32),
+    inset 0 0 25px 0 rgba(129, 140, 248, 0.06);
 }
 
 .card-glass:hover::before,
-.card-glass:hover::after {
+.card-glass:hover::after,
+.code-preview-card:hover::before,
+.code-preview-card:hover::after {
   opacity: 1;
 }
 
-.card-glass > * {
+/* Card Content (Stable Flat Z-Index to prevent edge hit-testing jitter) */
+.card-glass > *,
+.code-preview-card > * {
   position: relative;
   z-index: 3;
+}
+
+/* Bento Card specific styling */
+.bento-card {
+  border-radius: 1.5rem;
+  padding: 1.75rem;
+}
+
+/* Radar pulse animation for Live Status Bento */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.radar-live-dot {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #10b981;
+  border-radius: 50%;
+  animation: radar-pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 /* Magnetic Button Feel */
@@ -166,16 +224,20 @@ body.cursor-hover .custom-cursor-dot {
   transform: translateZ(20px);
 }
 
-/* Subtle holographic text sheen on hover */
+/* Modern high-contrast header typography (Static, without hover distraction) */
 .holo-text {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+  background: linear-gradient(180deg, #ffffff 20%, #e2e8f0 70%, #94a3b8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: filter 0.3s ease;
-}
-
-.holo-text:hover {
-  filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.6));
+  display: inline-block;
+  letter-spacing: -0.02em;
+  line-height: 1.25 !important;
+  padding-bottom: 0.2em;
+  padding-top: 0.05em;
+  padding-inline: 0.05em;
+  margin-bottom: -0.2em;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
 }
 
 /* Background Grid Line */
@@ -184,21 +246,6 @@ body.cursor-hover .custom-cursor-dot {
     linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
-}
-
-/* Card Interactive Terminal Preview Container */
-.code-preview-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 1.25rem;
-  background-color: #0b0f19;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.code-preview-card:hover {
-  border-color: rgba(99, 102, 241, 0.5);
-  box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
 }
 
 /* Terminal Window Box */
@@ -215,20 +262,96 @@ body.cursor-hover .custom-cursor-dot {
   border-color: rgba(129, 140, 248, 0.3);
 }
 
-/* Pills Button Selector */
-.pill-tab {
+/* CLI Terminal Simulator Screen */
+#cliTerminalScreen {
   font-family: 'JetBrains Mono', monospace;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
-  border-radius: 9999px;
-  padding: 0.25rem 1rem;
-  font-size: 0.875rem;
-  color: #fff;
-  transition: all 0.2s ease;
+  font-size: 0.775rem;
+  line-height: 1.45;
 }
 
-.pill-tab:hover, .pill-tab.active {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: #818cf8;
-  color: #818cf8;
+#cliTerminalScreen::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+#cliTerminalScreen::-webkit-scrollbar-track {
+  background: #060913;
+}
+
+#cliTerminalScreen::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+#cliTerminalScreen::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Live App & Code Tab Switcher */
+.tab-preview-btn {
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tab-preview-btn.active {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+  border-color: rgba(129, 140, 248, 0.5);
+  box-shadow: 0 0 12px -2px rgba(99, 102, 241, 0.6);
+}
+
+.view-app-panel,
+.view-code-panel {
+  will-change: opacity, transform;
+}
+
+.view-app-panel iframe {
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   Thin Glass Squircle Frame (< 100% Scaled High-Density Viewport)
+   ========================================================================== */
+.glass-squircle-frame {
+  position: relative;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  box-shadow: 
+    0 20px 50px -10px rgba(0, 0, 0, 0.75),
+    0 0 30px -5px rgba(99, 102, 241, 0.15),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-squircle-frame:hover {
+  border-color: rgba(129, 140, 248, 0.35);
+  box-shadow: 
+    0 25px 60px -10px rgba(0, 0, 0, 0.85),
+    0 0 40px -5px rgba(99, 102, 241, 0.25),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.3);
+}
+
+.glass-squircle-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #060913;
+}
+
+/* Scaled High-Density Iframe Canvas (88% Scale) */
+.glass-squircle-iframe {
+  width: 114%;
+  height: 114%;
+  border: none;
+  background-color: #060913;
+  transform: scale(0.88);
+  transform-origin: top left;
+  color-scheme: dark;
 }
 

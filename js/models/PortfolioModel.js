@@ -79,27 +79,143 @@ class PortfolioModel {
      */
     this.projects = [
       {
-        id: 'bbm-operations',
-        title: 'BBM Operations & Ledger Automation Tool',
-        badge: 'In Production (Pemda DIY)',
-        type: 'Vanilla JS Utility',
-        description: 'Client-side operational tool created to replace manual, error-prone fuel coupon tracking for internal public administration. Automatically calculates quotas, organizes vehicle allocations, and generates clean accounting ledgers for ~15 office personnel with zero backend friction.',
-        tags: ['JavaScript (ES6+)', 'DOM Manipulation', 'HTML5 / CSS3', 'Workflow Automation'],
-        repoUrl: 'https://github.com/aansan/BBM',
-        demoUrl: 'https://aansan.github.io/BBM',
-        demoLabel: 'Launch Demo',
-      },
-      {
         id: 'fnstory-app',
         title: 'FNStory — Digital Invitation & Interactive Media',
-        badge: 'Live Web Application',
-        type: 'Cloudflare Pages',
-        description: 'Production single-page web app built with mobile-first responsiveness, dynamic audio controls, and interactive event scheduling. Engineered with next-gen media optimization (WebP & modern audio compression) for instantaneous load times over cellular connections.',
-        tags: ['Modern JavaScript', 'Cloudflare Pages', 'Web Performance', 'Media Pipeline'],
+        badge: 'Production Web App',
+        type: 'Cloudflare Pages • Mobile-First PWA',
+        description: 'High-performance interactive web application built with a mobile-first philosophy, dynamic background audio controls (Web Audio API), and seamless event scheduling. Optimized through next-gen asset compression (WebP & modern audio encoding) delivering instantaneous load times across cellular networks.',
+        tags: ['Modern JavaScript', 'Cloudflare Pages', 'Web Audio API', 'Web Performance', 'Responsive UX'],
         repoUrl: '',
         demoUrl: 'https://fnstory.my.id',
-        demoLabel: 'Visit fnstory.my.id',
+        demoLabel: 'Launch fnstory.my.id',
       },
+      {
+        id: 'bbm-operations',
+        title: 'Fuel Voucher Management & Reconciliation System',
+        badge: 'In Production • Public Sector',
+        type: 'Vanilla JS SPA • Google Apps Script • AI OCR',
+        description: 'Public-sector logistics automation engineered for operational fuel voucher distribution, in-transit monitoring with age-alert indicators, and automated station reconciliation. Integrated with LLM Whisperer AI for layout-preserving OCR on physical receipts, Google Sheets API backend, and XSS sanitization safeguards.',
+        tags: ['JavaScript (ES6+)', 'Google Apps Script', 'Whisperer AI OCR', 'Google Sheets API', 'Workflow Automation'],
+        repoUrl: 'https://github.com/aansan/BBM',
+        demoUrl: 'https://aansan.github.io/BBM',
+        demoLabel: 'Launch Live Demo',
+      },
+    ];
+
+    /**
+     * Algorithmic & CLI Terminal applications (Node.js & readline-sync).
+     * Demonstrating computer science fundamentals, OOP prototypes, and MVC architecture.
+     */
+    this.terminalApps = [
+      {
+        id: 'calendar-cli',
+        title: 'Monthly Calendar Generator (CLI)',
+        badge: 'MVC Architecture • Pure Math',
+        type: 'Node.js Utility • Gregorian Algorithm',
+        summary: 'Pure mathematical calendar engine implementing Gregorian leap year rules, cumulative elapsed days from Jan 1, 1800, and Zeller-like day-of-week modulo arithmetic. Structured with clean MVC separation (Model, View, Controller) and readline-sync console interface.',
+        command: 'node index.js',
+        tags: ['Node.js', 'MVC Pattern', 'Gregorian Algorithm', 'readline-sync', 'Modular Architecture'],
+        highlights: [
+          'Zero Date() API dependency: pure mathematical date calculation',
+          'Clean Separation of Concerns: Model, View, and Controller',
+          'Dynamic text alignment and ASCII table formatting'
+        ],
+        codeSnippet: `class CalendarModel {
+  isLeapYear(year) {
+    return (year % 400 === 0) || (year % 4 === 0 && year % 100 !== 0);
+  }
+
+  getDaysInMonth(month = this.month, year = this.year) {
+    if (month === 2) return this.isLeapYear(year) ? 29 : 28;
+    return [4, 6, 9, 11].includes(month) ? 30 : 31;
+  }
+
+  getStartDayOfWeek() {
+    let totalDays = 0;
+    for (let y = 1800; y < this.year; y++) {
+      totalDays += this.isLeapYear(y) ? 366 : 365;
+    }
+    for (let m = 1; m < this.month; m++) {
+      totalDays += this.getDaysInMonth(m, this.year);
+    }
+    return (3 + totalDays) % 7; // Ref: Jan 1, 1800 = Wednesday (3)
+  }
+}`
+      },
+      {
+        id: 'tictactoe-cli',
+        title: 'Tic-Tac-Toe Terminal Game',
+        badge: 'OOP Prototypes • Game Loop',
+        type: 'Node.js Interactive Game • 3x3 Matrix Logic',
+        summary: 'Two-player turn-based console game engineered with prototype-based OOP, 3x3 matrix state management, dynamic ASCII grid rendering, and comprehensive win/draw condition evaluations using switch-case logic.',
+        command: 'node tictactoe.js',
+        tags: ['JavaScript (OOP)', 'Matrix Manipulation', 'Game Loop', 'readline-sync', 'State Management'],
+        highlights: [
+          'Prototype-based class modeling with TicTacToe constructor',
+          '8-direction win condition check across rows, columns, and diagonals',
+          'Input coordinate validation & draw condition detection'
+        ],
+        codeSnippet: `function TicTacToe() {
+  this.board = [
+    [' ', ' ', ' '],
+    [' ', ' ', ' '],
+    [' ', ' ', ' ']
+  ];
+  this.currentPlayer = 'X';
+}
+
+TicTacToe.prototype.checkWin = function() {
+  const b = this.board, p = this.currentPlayer;
+  switch (true) {
+    case b[0][0] === p && b[0][1] === p && b[0][2] === p:
+    case b[1][0] === p && b[1][1] === p && b[1][2] === p:
+    case b[2][0] === p && b[2][1] === p && b[2][2] === p:
+    case b[0][0] === p && b[1][0] === p && b[2][0] === p:
+    case b[0][1] === p && b[1][0] === p && b[2][1] === p:
+    case b[0][2] === p && b[1][2] === p && b[2][2] === p:
+    case b[0][0] === p && b[1][1] === p && b[2][2] === p:
+    case b[0][2] === p && b[1][1] === p && b[2][0] === p:
+      return true;
+    default:
+      return false;
+  }
+};`
+      },
+      {
+        id: 'atm-cli',
+        title: 'ATM Banking System & Account Ledger',
+        badge: 'Object-Oriented • Financial State',
+        type: 'Node.js Banking Simulation • Account Arrays',
+        summary: 'Interactive banking terminal simulating multi-account financial operations. Features OOP BankAccount constructors, balance encapsulation, withdrawal overdraft protection, and an interactive menu loop with readline-sync.',
+        command: 'node atm.js',
+        tags: ['JavaScript (ES6)', 'OOP Encapsulation', 'Financial State', 'readline-sync', 'Input Guardrails'],
+        highlights: [
+          'Encapsulated BankAccount instances with balance mutations',
+          'Array collection of 10 concurrent account instances',
+          'Robust input boundary checks and nested transaction loop'
+        ],
+        codeSnippet: `function BankAccount(id) {
+  this.id = id;
+  this.balance = 100.0;
+  this.getBalance = function() { return this.balance; };
+  this.withdraw = function(amount) { this.balance -= amount; };
+  this.deposit = function(amount) { this.balance += amount; };
+}
+
+const accountList = [];
+for (let i = 0; i < 10; i++) {
+  accountList.push(new BankAccount(i));
+}
+
+// Interactive menu loop with readline-sync
+while (inputMenu !== 4) {
+  switch (inputMenu) {
+    case 1: console.log(\`Balance: \${accountList[userId].getBalance().toFixed(1)}\`); break;
+    case 2: accountList[userId].withdraw(amount); break;
+    case 3: accountList[userId].deposit(amount); break;
+  }
+}`
+      }
     ];
 
     /**
@@ -215,6 +331,14 @@ class PortfolioModel {
    */
   getProjects() {
     return this.projects;
+  }
+
+  /**
+   * Retrieves algorithmic and CLI terminal applications.
+   * @returns {Object[]}
+   */
+  getTerminalApps() {
+    return this.terminalApps;
   }
 
   /**
