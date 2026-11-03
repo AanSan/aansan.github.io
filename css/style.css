@@ -1,0 +1,234 @@
+/* ==========================================================================
+   Base Styles & Overrides
+   ========================================================================== */
+
+body {
+  background-color: #0b0f19;
+  color: #e2e8f0;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+}
+
+/* Background radial glow effect */
+.gradient-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+}
+
+/* Floating interactive canvas */
+#cosmicCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -5;
+}
+
+/* Interactive spotlight mesh that follows cursor */
+.mouse-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  margin-left: -300px;
+  margin-top: -300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.05) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+  filter: blur(20px);
+  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Custom Fluid Custom Cursor */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: #818cf8;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background-color 0.2s;
+  box-shadow: 0 0 10px #6366f1, 0 0 20px #818cf8;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(129, 140, 248, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), height 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), border-color 0.3s;
+  backdrop-filter: blur(1px);
+}
+
+body.cursor-hover .custom-cursor-ring {
+  width: 58px;
+  height: 58px;
+  border-color: rgba(99, 102, 241, 0.9);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+body.cursor-hover .custom-cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: #38bdf8;
+}
+
+/* Glassmorphism card surface with dynamic 3D tilt & spotlight */
+.card-glass {
+  position: relative;
+  background: rgba(17, 24, 39, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Dynamic Radial Border Spotlight on Hover */
+.card-glass::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(129, 140, 248, 0.35),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dynamic Inner Reflection Glow */
+.card-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    320px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.06),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card-glass:hover::before,
+.card-glass:hover::after {
+  opacity: 1;
+}
+
+.card-glass > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Magnetic Button Feel */
+.magnetic-btn {
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+/* Parallax floating decoration elements */
+.parallax-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: -2;
+  will-change: transform;
+}
+
+.parallax-badge {
+  will-change: transform;
+  transform: translateZ(20px);
+}
+
+/* Subtle holographic text sheen on hover */
+.holo-text {
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: filter 0.3s ease;
+}
+
+.holo-text:hover {
+  filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.6));
+}
+
+/* Background Grid Line */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Card Interactive Terminal Preview Container */
+.code-preview-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background-color: #0b0f19;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.code-preview-card:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+}
+
+/* Terminal Window Box */
+.terminal-window {
+  background: #181d28;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'JetBrains Mono', monospace;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.code-preview-card:hover .terminal-window {
+  transform: translateY(-4px);
+  border-color: rgba(129, 140, 248, 0.3);
+}
+
+/* Pills Button Selector */
+.pill-tab {
+  font-family: 'JetBrains Mono', monospace;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: 9999px;
+  padding: 0.25rem 1rem;
+  font-size: 0.875rem;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.pill-tab:hover, .pill-tab.active {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #818cf8;
+  color: #818cf8;
+}
+

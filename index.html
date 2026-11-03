@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noviyan Hogy Andika S. – Junior Software Engineer</title>
+
+  <!-- External Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="min-h-screen selection:bg-brand-500 selection:text-white relative">
+
+  <!-- Background Glow FX -->
+  <div class="fixed inset-0 pointer-events-none gradient-glow -z-10"></div>
+
+  <!-- Parallax Floating Visual Orbs -->
+  <div class="parallax-orb w-96 h-96 bg-indigo-600/15 top-10 -left-20" data-parallax-speed="0.25"></div>
+  <div class="parallax-orb w-80 h-80 bg-violet-600/15 top-[600px] -right-20" data-parallax-speed="-0.2"></div>
+  <div class="parallax-orb w-96 h-96 bg-cyan-600/10 top-[1300px] -left-32" data-parallax-speed="0.18"></div>
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-[#0b0f19]/80 border-b border-slate-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#hero" class="font-mono text-sm sm:text-base font-semibold tracking-tight text-white hover:text-brand-400 transition-colors">
+        noviyan<span class="text-brand-500">.dev</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+        <a href="#about" class="hover:text-white transition-colors">About</a>
+        <a href="#projects" class="hover:text-white transition-colors">Projects</a>
+        <a href="#skills" class="hover:text-white transition-colors">Skills</a>
+        <a href="#certifications" class="hover:text-white transition-colors">Certifications</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="p-2 text-slate-400 hover:text-white transition-colors" title="GitHub Profile">
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="mailto:aansan26@gmail.com" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-sm">
+          <span>Contact Me</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-24 py-12">
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-6 sm:pt-14 pb-8" data-parallax-speed="0.04">
+      <div id="heroAvailability" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700/60 text-xs font-mono text-brand-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Available for Remote Software Engineer Roles
+      </div>
+
+      <h1 id="heroTitle" class="holo-text text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6">
+        Noviyan Hogy Andika Suryanto
+      </h1>
+
+      <p id="heroHeadline" class="text-xl sm:text-2xl font-medium text-slate-300 max-w-3xl mb-4 leading-relaxed">
+        <span class="text-white">Junior Software Engineer</span> focused on modern JavaScript, clean front-end architecture, and AI-accelerated tooling.
+      </p>
+
+      <p id="heroBio" class="text-base text-slate-400 max-w-2xl leading-relaxed mb-8">
+        Combining rigorous discipline from public sector data integrity with self-driven software engineering. Actively solving real-world friction through browser utilities, web performance optimization, and pragmatic development.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="#projects" class="px-5 py-2.5 rounded-xl bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-colors shadow">
+          Explore Projects
+        </a>
+        <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl card-glass text-slate-200 font-medium text-sm hover:text-white transition-colors flex items-center gap-2">
+          <span>GitHub Activity</span>
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+        <button id="copyEmailBtn" class="px-4 py-2.5 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 text-sm font-mono flex items-center gap-2 transition-all" type="button">
+          <span id="copyEmailText">aansan26@gmail.com</span>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="projects" class="space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Portfolio Work</span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Featured Projects</h2>
+        </div>
+        <p class="text-sm text-slate-400">Directly built to automate workflows &amp; deliver performant web interfaces.</p>
+      </div>
+
+      <!-- Dynamically Rendered by View -->
+      <div id="projectsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="skills" class="space-y-8">
+      <div class="border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+        <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Capabilities</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Technical Skills &amp; Stack</h2>
+      </div>
+
+      <!-- Dynamically Rendered by View -->
+      <div id="skillsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+    </section>
+
+    <!-- Verified Certifications -->
+    <section id="certifications" class="space-y-8">
+      <div class="border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+        <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Credentials</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Verified Certifications</h2>
+      </div>
+
+      <!-- Dynamically Rendered by View -->
+      <div id="certificationsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- Professional Background & Education -->
+    <section id="about" class="space-y-6">
+      <div class="border-b border-slate-800 pb-4" data-parallax-speed="0.05">
+        <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Background</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Experience &amp; Foundation</h2>
+      </div>
+
+      <!-- Dynamically Rendered by View -->
+      <div id="experienceContainer" class="card-glass rounded-2xl p-6 sm:p-7 space-y-6"></div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 py-10 mt-20 text-center text-xs text-slate-500 font-mono">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 Noviyan Hogy Andika Suryanto. Built with HTML5 &amp; Tailwind CSS.</p>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub</a>
+        <a href="https://fnstory.my.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">FNStory</a>
+        <a href="mailto:aansan26@gmail.com" class="hover:text-white transition-colors">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Entry Point (ES Module) -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
