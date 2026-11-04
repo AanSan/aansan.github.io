@@ -4,6 +4,9 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 body {
@@ -11,6 +14,28 @@ body {
   color: #e2e8f0;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100%;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Fast responsive touch on mobile */
+a, button, input, select, textarea, [role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Header & Nav Link Styling */
@@ -32,6 +57,17 @@ body {
   box-shadow: 0 0 14px -2px rgba(99, 102, 241, 0.35);
 }
 
+.mobile-nav-link {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+
+.mobile-nav-link.active {
+  color: #ffffff;
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(129, 140, 248, 0.4);
+}
+
 /* Background radial glow effect */
 .gradient-glow {
   background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
@@ -41,16 +77,31 @@ body {
 #cosmicCanvas {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: -5;
 }
 
-/* Custom Laser Dot Cursor (Sleek, Centered, No Trailing Ring) */
-@media (pointer: fine) {
+/* ==========================================================================
+   Custom Laser Dot Cursor (Instant 0ms Hardware Tracking, Precision Pointer Only)
+   ========================================================================== */
+@media (pointer: fine) and (hover: hover) {
   body, a, button, [role="button"] {
     cursor: none !important;
+  }
+}
+
+/* Touchscreen Guard: Completely disable custom cursor on touch/mobile devices */
+@media (pointer: coarse), (hover: none) {
+  .custom-laser-dot {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  body, a, button, [role="button"] {
+    cursor: auto !important;
   }
 }
 
@@ -66,22 +117,40 @@ body {
   z-index: 99999;
   transform: translate(-50%, -50%);
   box-shadow: 
-    0 0 4px #ffffff,
-    0 0 8px #38bdf8,
-    0 0 16px rgba(56, 189, 248, 0.85),
-    0 0 25px rgba(99, 102, 241, 0.5);
-  transition: transform 0.15s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.2s ease;
+    0 0 5px #ffffff,
+    0 0 10px #38bdf8,
+    0 0 18px rgba(56, 189, 248, 0.9),
+    0 0 28px rgba(99, 102, 241, 0.6);
   opacity: 0;
   will-change: transform;
+  /* ZERO transition on transform to guarantee instant 0ms latency hardware-matched tracking */
+  transition: 
+    width 0.16s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.16s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.2s ease,
+    opacity 0.15s ease,
+    background-color 0.15s ease;
 }
 
 body.cursor-hover .custom-laser-dot {
-  transform: translate(-50%, -50%) scale(1.75);
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.95);
   box-shadow: 
-    0 0 6px #ffffff,
-    0 0 12px #38bdf8,
-    0 0 22px rgba(56, 189, 248, 1),
-    0 0 35px rgba(129, 140, 248, 0.8);
+    0 0 8px #ffffff,
+    0 0 16px #38bdf8,
+    0 0 26px rgba(56, 189, 248, 1),
+    0 0 38px rgba(129, 140, 248, 0.85);
+}
+
+body.cursor-active .custom-laser-dot {
+  width: 8px;
+  height: 8px;
+  background: #38bdf8;
+  box-shadow: 
+    0 0 10px #ffffff,
+    0 0 20px #38bdf8,
+    0 0 32px rgba(56, 189, 248, 1);
 }
 
 /* ==========================================================================
@@ -99,9 +168,9 @@ body.cursor-hover .custom-laser-dot {
     0 20px 40px -15px rgba(0, 0, 0, 0.65),
     inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.16),
     inset 0 0 20px 0 rgba(255, 255, 255, 0.02);
-  transform-style: preserve-3d;
   will-change: transform;
   overflow: hidden;
+  max-width: 100%;
   transition: border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -171,10 +240,17 @@ body.cursor-hover .custom-laser-dot {
   z-index: 3;
 }
 
-/* Bento Card specific styling */
+/* Bento Card specific styling - Responsive for mobile */
 .bento-card {
-  border-radius: 1.5rem;
-  padding: 1.75rem;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .bento-card {
+    border-radius: 1.5rem;
+    padding: 1.75rem;
+  }
 }
 
 /* Radar pulse animation for Live Status Bento */
@@ -217,6 +293,15 @@ body.cursor-hover .custom-laser-dot {
   pointer-events: none;
   z-index: -2;
   will-change: transform;
+}
+
+@media (max-width: 640px) {
+  .parallax-orb {
+    width: 200px !important;
+    height: 200px !important;
+    filter: blur(35px) !important;
+    opacity: 0.5;
+  }
 }
 
 .parallax-badge {
@@ -368,6 +453,7 @@ body.cursor-hover .custom-laser-dot {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  contain: paint;
   background: #060913;
 }
 
@@ -381,4 +467,53 @@ body.cursor-hover .custom-laser-dot {
   transform-origin: top left;
   color-scheme: dark;
 }
+
+@media (max-width: 640px) {
+  .glass-squircle-iframe {
+    width: 122%;
+    height: 122%;
+    transform: scale(0.82);
+  }
+}
+
+/* ==========================================================================
+   Mobile Ergonomics, Touch Targets & Smoothness Utilities
+   ========================================================================== */
+
+/* Utility to hide scrollbars while preserving scrolling */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Sleek minimal pre scrollbars for code inspection */
+pre::-webkit-scrollbar {
+  height: 4px;
+}
+pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+pre::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 2px;
+}
+
+/* Prevent unwanted zoom on iOS Safari when tapping inputs */
+@media (max-width: 640px) {
+  input[type="text"], input[type="email"] {
+    font-size: 16px !important;
+  }
+}
+
+/* Native-feel tap compression on mobile touch */
+@media (pointer: coarse) {
+  button:active, a:active {
+    transform: scale(0.97);
+    transition: transform 0.08s ease;
+  }
+}
+
 

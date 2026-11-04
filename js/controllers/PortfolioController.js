@@ -22,6 +22,8 @@ class PortfolioController {
   init() {
     this.renderAll();
     this.view.bindCopyEmail(this.handleCopyEmail.bind(this));
+    this.view.bindMobileMenu();
+    this.view.bindBackToTop();
   }
 
   /**

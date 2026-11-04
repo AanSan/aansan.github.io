@@ -22,6 +22,11 @@ class PortfolioView {
       skillsContainer: document.getElementById('skillsContainer'),
       certificationsContainer: document.getElementById('certificationsContainer'),
       experienceContainer: document.getElementById('experienceContainer'),
+      mobileMenuBtn: document.getElementById('mobileMenuBtn'),
+      mobileMenu: document.getElementById('mobileMenu'),
+      mobileMenuOpenIcon: document.getElementById('mobileMenuOpenIcon'),
+      mobileMenuCloseIcon: document.getElementById('mobileMenuCloseIcon'),
+      backToTopBtn: document.getElementById('backToTopBtn'),
     };
   }
 
@@ -91,11 +96,11 @@ class PortfolioView {
 
       // Ultra-sleek Thin Glass Squircle Frame (< 100% scaled high-density viewport)
       const glassFrameCol = `
-        <div class="lg:col-span-6 flex justify-center ${isReversed ? 'order-1 lg:order-2' : 'order-1'}">
-          <div class="glass-squircle-frame relative w-full max-w-[480px] h-[390px] sm:h-[430px] flex flex-col justify-between shadow-2xl">
+        <div class="lg:col-span-6 flex justify-center w-full min-w-0 ${isReversed ? 'order-1 lg:order-2' : 'order-1'}">
+          <div class="glass-squircle-frame relative w-full max-w-[480px] h-[300px] sm:h-[400px] lg:h-[430px] flex flex-col justify-between shadow-2xl">
             
             <!-- Window Glass Header Bar -->
-            <div class="h-10 px-4 bg-slate-900/80 backdrop-blur-md flex items-center justify-between border-b border-white/10 z-20 shrink-0 select-none">
+            <div class="h-10 px-3 sm:px-4 bg-slate-900/80 backdrop-blur-md flex items-center justify-between border-b border-white/10 z-20 shrink-0 select-none">
               <!-- Traffic Light Dots -->
               <div class="flex items-center gap-1.5">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50"></span>
@@ -104,7 +109,7 @@ class PortfolioView {
               </div>
 
               <!-- Domain & SSL Badge Pill -->
-              <div class="px-3 py-1 rounded-full bg-slate-950/80 border border-slate-700/60 flex items-center gap-1.5 max-w-[220px] truncate text-[11px] font-mono text-slate-300">
+              <div class="px-2.5 sm:px-3 py-1 rounded-full bg-slate-950/80 border border-slate-700/60 flex items-center gap-1.5 max-w-[190px] sm:max-w-[220px] truncate text-[11px] font-mono text-slate-300">
                 <svg class="w-3 h-3 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 <span class="truncate font-medium text-slate-200">${domainDisplay}</span>
               </div>
@@ -128,12 +133,15 @@ class PortfolioView {
             </div>
 
             <!-- Bottom Glass Status Bar -->
-            <div class="h-6 px-4 bg-slate-900/70 backdrop-blur-sm border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 select-none z-20 shrink-0">
+            <div class="h-6 px-3 sm:px-4 bg-slate-900/70 backdrop-blur-sm border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 select-none z-20 shrink-0">
               <span class="flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                 <span>Interactive Preview</span>
               </span>
-              <span class="text-slate-500">Scale: 88%</span>
+              <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline flex items-center gap-1">
+                <span>Open Live</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
             </div>
 
           </div>
@@ -142,7 +150,7 @@ class PortfolioView {
 
       // Details & Terminal Code Column
       const detailsCol = `
-        <div class="lg:col-span-6 flex flex-col justify-between ${isReversed ? 'order-2 lg:order-1' : 'order-2'}">
+        <div class="lg:col-span-6 flex flex-col justify-between w-full min-w-0 ${isReversed ? 'order-2 lg:order-1' : 'order-2'}">
           <div>
             <!-- Status Badge -->
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-3 shadow-sm">
@@ -151,52 +159,52 @@ class PortfolioView {
             </div>
 
             <!-- Title & Subtitle -->
-            <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">${project.title}</h3>
-            <p class="text-xs sm:text-sm font-mono text-brand-400 font-medium mb-4">${project.type}</p>
+            <h3 class="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1">${project.title}</h3>
+            <p class="text-xs sm:text-sm font-mono text-brand-400 font-medium mb-3 sm:mb-4">${project.type}</p>
 
             <!-- Description -->
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-5">
+            <p class="text-slate-300 text-xs sm:text-base leading-relaxed mb-4 sm:mb-5">
               ${project.description}
             </p>
 
             <!-- Terminal Window (MacOS Style Code Inspection) -->
-            <div class="terminal-window p-4 mb-5 shadow-inner">
-              <div class="flex items-center justify-between mb-3 border-b border-slate-800/80 pb-2">
-                <div class="flex items-center gap-2">
-                  <span class="w-3 h-3 rounded-full bg-red-500 inline-block shadow-sm"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block shadow-sm"></span>
-                  <span class="w-3 h-3 rounded-full bg-green-500 inline-block shadow-sm"></span>
+            <div class="terminal-window p-3 sm:p-4 mb-4 sm:mb-5 shadow-inner w-full min-w-0 overflow-hidden">
+              <div class="flex items-center justify-between mb-2.5 sm:mb-3 border-b border-slate-800/80 pb-2">
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block shadow-sm"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block shadow-sm"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block shadow-sm"></span>
                 </div>
-                <span class="text-[11px] font-mono text-slate-400">${isBBM ? 'GoogleScript.js • OCR_AI.js' : 'audioEngine.js • pwaService.js'}</span>
-                <span class="text-[10px] font-mono text-indigo-400 font-semibold">ES6+</span>
+                <span class="text-[10px] sm:text-[11px] font-mono text-slate-400 truncate max-w-[170px] sm:max-w-none">${isBBM ? 'GoogleScript.js • OCR_AI.js' : 'audioEngine.js • pwaService.js'}</span>
+                <span class="text-[10px] font-mono text-indigo-400 font-semibold shrink-0">ES6+</span>
               </div>
-              <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500"><code>${codeSnippet}</code></pre>
+              <pre class="text-[11px] sm:text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 pb-1 w-full max-w-full"><code>${codeSnippet}</code></pre>
             </div>
 
             <!-- Tags Stack -->
-            <div class="flex flex-wrap gap-2 mb-6">
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
               ${tagsHtml}
             </div>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800/80">
+          <div class="flex items-center gap-2.5 sm:gap-3 pt-4 border-t border-slate-800/80">
             ${project.repoUrl ? `
-              <a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700/60 shadow-sm">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 14.42 22 12A10 10 0 0 0 12 2z"/></svg>
+              <a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 sm:flex-none justify-center inline-flex items-center gap-1.5 sm:gap-2 text-xs font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700/60 shadow-sm active:scale-95 text-center">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 14.42 22 12A10 10 0 0 0 12 2z"/></svg>
                 <span>GitHub Repo</span>
               </a>` : ''}
-            <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow">
+            <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 sm:flex-none justify-center inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow active:scale-95 text-center">
               <span>${project.demoLabel}</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
           </div>
         </div>
       `;
 
       const card = `
-        <article class="code-preview-card bento-card p-6 sm:p-9 bg-grid-pattern" data-parallax-speed="${parallaxSpeed}">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <article class="code-preview-card bento-card p-5 sm:p-9 bg-grid-pattern w-full min-w-0" data-parallax-speed="${parallaxSpeed}">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full min-w-0">
             ${glassFrameCol}
             ${detailsCol}
           </div>
@@ -286,7 +294,7 @@ class PortfolioView {
       return `
         <button 
           type="button" 
-          class="cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
+          class="cli-tab-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all whitespace-nowrap shrink-0 ${
             isActive 
               ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
@@ -309,62 +317,62 @@ class PortfolioView {
     `).join('');
 
     const labCard = `
-      <article class="code-preview-card bento-card p-6 sm:p-9 bg-grid-pattern" data-parallax-speed="0.01">
+      <article class="code-preview-card bento-card p-5 sm:p-9 bg-grid-pattern w-full min-w-0" data-parallax-speed="0.01">
         
         <!-- App Switcher Tabs -->
-        <div class="flex flex-wrap items-center gap-2 mb-8 border-b border-slate-800/80 pb-4">
-          <span class="text-xs font-mono text-slate-400 mr-2 flex items-center gap-1.5">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6 sm:mb-8 border-b border-slate-800/80 pb-4 w-full min-w-0">
+          <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5 shrink-0">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Select Environment:</span>
+            <span>Environment:</span>
           </span>
-          <div id="cliTabsGroup" class="flex flex-wrap items-center gap-2">
+          <div id="cliTabsGroup" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full sm:flex-wrap">
             ${tabsHtml}
           </div>
         </div>
 
         <!-- Main Dual Column Display -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch w-full min-w-0">
           
           <!-- Column 1: Live Interactive Terminal Console (lg:col-span-6) -->
-          <div class="lg:col-span-6 flex flex-col">
-            <div class="glass-squircle-frame relative w-full h-[470px] flex flex-col justify-between shadow-2xl border border-white/10">
+          <div class="lg:col-span-6 flex flex-col w-full min-w-0">
+            <div class="glass-squircle-frame relative w-full h-[380px] sm:h-[440px] lg:h-[470px] flex flex-col justify-between shadow-2xl border border-white/10">
               
               <!-- Terminal Top Bar -->
-              <div class="h-10 px-4 bg-slate-900/90 backdrop-blur-md flex items-center justify-between border-b border-white/10 select-none z-20 shrink-0">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm border border-amber-600/50"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/50"></span>
-                  <span id="cliTerminalTitle" class="text-[11px] font-mono text-slate-400 ml-2">bash - ${app.command}</span>
+              <div class="h-10 px-3 sm:px-4 bg-slate-900/90 backdrop-blur-md flex items-center justify-between border-b border-white/10 select-none z-20 shrink-0">
+                <div class="flex items-center gap-1.5 truncate mr-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50 shrink-0"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm border border-amber-600/50 shrink-0"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/50 shrink-0"></span>
+                  <span id="cliTerminalTitle" class="text-[10px] sm:text-[11px] font-mono text-slate-400 ml-1.5 truncate">bash - ${app.command}</span>
                 </div>
-                <button id="cliResetBtn" type="button" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50" title="Restart simulation">
+                <button id="cliResetBtn" type="button" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50 shrink-0 active:scale-95" title="Restart simulation">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                   <span>Restart</span>
                 </button>
               </div>
 
               <!-- Terminal Output Screen -->
-              <div id="cliTerminalScreen" class="flex-1 p-4 bg-[#060913] font-mono text-xs text-slate-200 overflow-y-auto space-y-1.5 selection:bg-indigo-600 selection:text-white whitespace-pre-wrap">
+              <div id="cliTerminalScreen" class="flex-1 p-3 sm:p-4 bg-[#060913] font-mono text-xs text-slate-200 overflow-y-auto space-y-1.5 selection:bg-indigo-600 selection:text-white whitespace-pre-wrap break-words">
                 <!-- Dynamic logs injected by terminal runner -->
               </div>
 
               <!-- Terminal Interactive Prompt Input Bar -->
-              <form id="cliTerminalForm" class="p-3 bg-slate-900/90 backdrop-blur-md border-t border-white/10 flex items-center gap-2 select-none z-20 shrink-0">
+              <form id="cliTerminalForm" class="p-2 sm:p-3 bg-slate-900/90 backdrop-blur-md border-t border-white/10 flex items-center gap-2 select-none z-20 shrink-0">
                 <span id="cliPromptLabel" class="text-xs font-mono text-emerald-400 shrink-0">&gt;</span>
                 <input 
                   type="text" 
                   id="cliTerminalInput" 
-                  class="flex-1 bg-slate-950/80 border border-slate-700/70 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                  class="flex-1 min-w-0 bg-slate-950/80 border border-slate-700/70 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-[15px] sm:text-xs"
                   placeholder="Enter input..."
                   autocomplete="off"
                   spellcheck="false" />
-                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-semibold transition-colors shrink-0">
+                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-semibold transition-colors shrink-0 active:scale-95">
                   Send
                 </button>
               </form>
 
               <!-- Interactive Quick Shortcuts -->
-              <div id="cliShortcutsBar" class="px-3 py-2 bg-slate-950/90 border-t border-white/5 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+              <div id="cliShortcutsBar" class="px-2.5 sm:px-3 py-2 bg-slate-950/90 border-t border-white/5 flex items-center gap-1.5 text-xs font-mono overflow-x-auto scrollbar-none whitespace-nowrap">
                 <!-- Dynamic shortcuts for fast clicking -->
               </div>
 
@@ -372,8 +380,8 @@ class PortfolioView {
           </div>
 
           <!-- Column 2: Architectural Details & Code Inspector (lg:col-span-6) -->
-          <div class="lg:col-span-6 flex flex-col justify-between">
-            <div>
+          <div class="lg:col-span-6 flex flex-col justify-between w-full min-w-0">
+            <div class="w-full min-w-0">
               <!-- Badge -->
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-3 shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -395,7 +403,7 @@ class PortfolioView {
               </ul>
 
               <!-- Terminal Code Inspection Box -->
-              <div id="cliCodeWindow" class="terminal-window p-4 mb-5 shadow-inner">
+              <div id="cliCodeWindow" class="terminal-window p-3 sm:p-4 mb-4 sm:mb-5 shadow-inner w-full min-w-0 overflow-hidden">
                 <div class="flex items-center justify-between mb-2.5 border-b border-slate-800/80 pb-2">
                   <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block shadow-sm"></span>
@@ -403,9 +411,9 @@ class PortfolioView {
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
                     <span id="cliCodeFile" class="text-[11px] font-mono text-slate-400 ml-1.5">${app.id === 'calendar-cli' ? 'calenderModel.js' : app.id === 'tictactoe-cli' ? 'tictactoe.js' : 'atm.js'}</span>
                   </div>
-                  <span class="text-[10px] font-mono text-indigo-400 font-semibold">ES6+ CLI</span>
+                  <span class="text-[10px] font-mono text-indigo-400 font-semibold shrink-0">ES6+ CLI</span>
                 </div>
-                <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 max-h-[160px] overflow-y-auto"><code id="cliCodeContent">${this.escapeHtml(app.codeSnippet)}</code></pre>
+                <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 max-h-[160px] overflow-y-auto w-full max-w-full pb-1"><code id="cliCodeContent">${this.escapeHtml(app.codeSnippet)}</code></pre>
               </div>
 
               <!-- Tags Stack -->
@@ -438,7 +446,7 @@ class PortfolioView {
     const tabBtns = this.elements.cliLabContainer.querySelectorAll('.cli-tab-btn');
     tabBtns.forEach((btn, idx) => {
       const isActive = idx === newIndex;
-      btn.className = `cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
+      btn.className = `cli-tab-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all whitespace-nowrap shrink-0 ${
         isActive 
           ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
           : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
@@ -567,14 +575,14 @@ class PortfolioView {
         if (!shortcutsBar) return;
         shortcutsBar.innerHTML = '';
         const span = document.createElement('span');
-        span.className = 'text-slate-500 mr-1';
+        span.className = 'text-slate-500 mr-1 shrink-0 text-xs';
         span.textContent = 'Quick:';
         shortcutsBar.appendChild(span);
 
         shortcuts.forEach(({ label, value }) => {
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'px-2 py-0.5 rounded bg-slate-900 border border-slate-700/70 hover:border-indigo-400 text-slate-300 hover:text-white transition-colors';
+          btn.className = 'px-2.5 py-1 rounded bg-slate-900 border border-slate-700/70 hover:border-indigo-400 active:bg-indigo-900/50 text-slate-300 hover:text-white transition-colors shrink-0 text-xs font-mono touch-manipulation';
           btn.textContent = label;
           btn.addEventListener('click', () => {
             input.value = value;
@@ -942,14 +950,14 @@ class PortfolioView {
       const category = categories[i];
       const speed = speeds[i % speeds.length];
       const listItems = category.items
-        .map((item) => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>${item}</li>`)
+        .map((item) => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0"></span><span>${item}</span></li>`)
         .join('');
 
       const col = `
-        <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="${speed}">
+        <div class="card-glass bento-card p-5 sm:p-6 flex flex-col justify-between w-full min-w-0" data-parallax-speed="${speed}">
           <div>
-            <div class="text-brand-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4 pb-2 border-b border-slate-800/80">${category.index}. ${category.title}</div>
-            <ul class="space-y-2.5 text-sm text-slate-300">
+            <div class="text-brand-400 text-xs font-mono font-semibold uppercase tracking-wider mb-3 sm:mb-4 pb-2 border-b border-slate-800/80">${category.index}. ${category.title}</div>
+            <ul class="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-slate-300">
               ${listItems}
             </ul>
           </div>
@@ -975,18 +983,18 @@ class PortfolioView {
       const cert = certifications[i];
       const speed = speeds[i % speeds.length];
       const card = `
-        <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="${speed}">
+        <div class="card-glass bento-card p-5 sm:p-6 flex flex-col justify-between w-full min-w-0" data-parallax-speed="${speed}">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xs font-mono text-emerald-400">${cert.track}</span>
               <span class="w-2 h-2 rounded-full bg-emerald-400/80"></span>
             </div>
-            <h3 class="text-base font-bold text-white mb-2">${cert.title}</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+            <h3 class="text-sm sm:text-base font-bold text-white mb-2">${cert.title}</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4 sm:mb-5">
               ${cert.description}
             </p>
           </div>
-          <a href="${cert.verifyUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-400 hover:text-brand-300 transition-colors pt-3 border-t border-slate-800/80">
+          <a href="${cert.verifyUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-400 hover:text-brand-300 transition-colors pt-3 border-t border-slate-800/80 active:scale-95">
             <span>Verify Credential #${cert.id}</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </a>
@@ -1010,15 +1018,15 @@ class PortfolioView {
     for (let i = 0; i < experiences.length; i++) {
       const exp = experiences[i];
       const isLast = i === experiences.length - 1;
-      const borderClass = isLast ? '' : 'border-b border-slate-800/80 pb-5';
+      const borderClass = isLast ? '' : 'border-b border-slate-800/80 pb-4 sm:pb-5';
 
       const entry = `
-        <div class="${borderClass}">
+        <div class="${borderClass} w-full min-w-0">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-            <h3 class="text-base font-bold text-white">${exp.role}</h3>
+            <h3 class="text-sm sm:text-base font-bold text-white">${exp.role}</h3>
             <span class="text-xs font-mono text-slate-400">${exp.period}</span>
           </div>
-          <p class="text-sm text-slate-300 leading-relaxed">
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
             ${exp.description}
           </p>
         </div>
@@ -1053,6 +1061,79 @@ class PortfolioView {
     setTimeout(() => {
       this.elements.copyEmailText.textContent = originalText;
     }, 2000);
+  }
+
+  /**
+   * Binds mobile hamburger navigation menu toggle, link clicks, and outside-tap dismiss.
+   */
+  bindMobileMenu() {
+    if (!this.elements.mobileMenuBtn || !this.elements.mobileMenu) return;
+
+    const toggleMenu = (open) => {
+      const isOpening = open !== undefined ? open : this.elements.mobileMenu.classList.contains('hidden');
+      if (isOpening) {
+        this.elements.mobileMenu.classList.remove('hidden');
+        this.elements.mobileMenuBtn.setAttribute('aria-expanded', 'true');
+        if (this.elements.mobileMenuOpenIcon) this.elements.mobileMenuOpenIcon.classList.add('hidden');
+        if (this.elements.mobileMenuCloseIcon) this.elements.mobileMenuCloseIcon.classList.remove('hidden');
+      } else {
+        this.elements.mobileMenu.classList.add('hidden');
+        this.elements.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        if (this.elements.mobileMenuOpenIcon) this.elements.mobileMenuOpenIcon.classList.remove('hidden');
+        if (this.elements.mobileMenuCloseIcon) this.elements.mobileMenuCloseIcon.classList.add('hidden');
+      }
+    };
+
+    this.elements.mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Close menu when clicking any mobile nav link
+    const links = this.elements.mobileMenu.querySelectorAll('.mobile-nav-link');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleMenu(false);
+      });
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!this.elements.mobileMenu.contains(e.target) && !this.elements.mobileMenuBtn.contains(e.target)) {
+        toggleMenu(false);
+      }
+    });
+
+    // Close on window resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        toggleMenu(false);
+      }
+    }, { passive: true });
+  }
+
+  /**
+   * Binds floating back-to-top button visibility and smooth scroll handler.
+   */
+  bindBackToTop() {
+    if (!this.elements.backToTopBtn) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 350) {
+        this.elements.backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      } else {
+        this.elements.backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    this.elements.backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
   }
 }
 

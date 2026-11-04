@@ -391,7 +391,6 @@ while (inputMenu !== 4) {
   }
 }
 
-
 /* === Bundled: js/views/PortfolioView.js === */
 /**
  * @fileoverview View module rendering DOM components according to UI state.
@@ -417,6 +416,11 @@ class PortfolioView {
       skillsContainer: document.getElementById('skillsContainer'),
       certificationsContainer: document.getElementById('certificationsContainer'),
       experienceContainer: document.getElementById('experienceContainer'),
+      mobileMenuBtn: document.getElementById('mobileMenuBtn'),
+      mobileMenu: document.getElementById('mobileMenu'),
+      mobileMenuOpenIcon: document.getElementById('mobileMenuOpenIcon'),
+      mobileMenuCloseIcon: document.getElementById('mobileMenuCloseIcon'),
+      backToTopBtn: document.getElementById('backToTopBtn'),
     };
   }
 
@@ -486,11 +490,11 @@ class PortfolioView {
 
       // Ultra-sleek Thin Glass Squircle Frame (< 100% scaled high-density viewport)
       const glassFrameCol = `
-        <div class="lg:col-span-6 flex justify-center ${isReversed ? 'order-1 lg:order-2' : 'order-1'}">
-          <div class="glass-squircle-frame relative w-full max-w-[480px] h-[390px] sm:h-[430px] flex flex-col justify-between shadow-2xl">
+        <div class="lg:col-span-6 flex justify-center w-full min-w-0 ${isReversed ? 'order-1 lg:order-2' : 'order-1'}">
+          <div class="glass-squircle-frame relative w-full max-w-[480px] h-[300px] sm:h-[400px] lg:h-[430px] flex flex-col justify-between shadow-2xl">
             
             <!-- Window Glass Header Bar -->
-            <div class="h-10 px-4 bg-slate-900/80 backdrop-blur-md flex items-center justify-between border-b border-white/10 z-20 shrink-0 select-none">
+            <div class="h-10 px-3 sm:px-4 bg-slate-900/80 backdrop-blur-md flex items-center justify-between border-b border-white/10 z-20 shrink-0 select-none">
               <!-- Traffic Light Dots -->
               <div class="flex items-center gap-1.5">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50"></span>
@@ -499,7 +503,7 @@ class PortfolioView {
               </div>
 
               <!-- Domain & SSL Badge Pill -->
-              <div class="px-3 py-1 rounded-full bg-slate-950/80 border border-slate-700/60 flex items-center gap-1.5 max-w-[220px] truncate text-[11px] font-mono text-slate-300">
+              <div class="px-2.5 sm:px-3 py-1 rounded-full bg-slate-950/80 border border-slate-700/60 flex items-center gap-1.5 max-w-[190px] sm:max-w-[220px] truncate text-[11px] font-mono text-slate-300">
                 <svg class="w-3 h-3 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                 <span class="truncate font-medium text-slate-200">${domainDisplay}</span>
               </div>
@@ -523,12 +527,15 @@ class PortfolioView {
             </div>
 
             <!-- Bottom Glass Status Bar -->
-            <div class="h-6 px-4 bg-slate-900/70 backdrop-blur-sm border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 select-none z-20 shrink-0">
+            <div class="h-6 px-3 sm:px-4 bg-slate-900/70 backdrop-blur-sm border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 select-none z-20 shrink-0">
               <span class="flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                 <span>Interactive Preview</span>
               </span>
-              <span class="text-slate-500">Scale: 88%</span>
+              <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline flex items-center gap-1">
+                <span>Open Live</span>
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
             </div>
 
           </div>
@@ -537,7 +544,7 @@ class PortfolioView {
 
       // Details & Terminal Code Column
       const detailsCol = `
-        <div class="lg:col-span-6 flex flex-col justify-between ${isReversed ? 'order-2 lg:order-1' : 'order-2'}">
+        <div class="lg:col-span-6 flex flex-col justify-between w-full min-w-0 ${isReversed ? 'order-2 lg:order-1' : 'order-2'}">
           <div>
             <!-- Status Badge -->
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-3 shadow-sm">
@@ -546,52 +553,52 @@ class PortfolioView {
             </div>
 
             <!-- Title & Subtitle -->
-            <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">${project.title}</h3>
-            <p class="text-xs sm:text-sm font-mono text-brand-400 font-medium mb-4">${project.type}</p>
+            <h3 class="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1">${project.title}</h3>
+            <p class="text-xs sm:text-sm font-mono text-brand-400 font-medium mb-3 sm:mb-4">${project.type}</p>
 
             <!-- Description -->
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-5">
+            <p class="text-slate-300 text-xs sm:text-base leading-relaxed mb-4 sm:mb-5">
               ${project.description}
             </p>
 
             <!-- Terminal Window (MacOS Style Code Inspection) -->
-            <div class="terminal-window p-4 mb-5 shadow-inner">
-              <div class="flex items-center justify-between mb-3 border-b border-slate-800/80 pb-2">
-                <div class="flex items-center gap-2">
-                  <span class="w-3 h-3 rounded-full bg-red-500 inline-block shadow-sm"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block shadow-sm"></span>
-                  <span class="w-3 h-3 rounded-full bg-green-500 inline-block shadow-sm"></span>
+            <div class="terminal-window p-3 sm:p-4 mb-4 sm:mb-5 shadow-inner w-full min-w-0 overflow-hidden">
+              <div class="flex items-center justify-between mb-2.5 sm:mb-3 border-b border-slate-800/80 pb-2">
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block shadow-sm"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-yellow-500 inline-block shadow-sm"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block shadow-sm"></span>
                 </div>
-                <span class="text-[11px] font-mono text-slate-400">${isBBM ? 'GoogleScript.js • OCR_AI.js' : 'audioEngine.js • pwaService.js'}</span>
-                <span class="text-[10px] font-mono text-indigo-400 font-semibold">ES6+</span>
+                <span class="text-[10px] sm:text-[11px] font-mono text-slate-400 truncate max-w-[170px] sm:max-w-none">${isBBM ? 'GoogleScript.js • OCR_AI.js' : 'audioEngine.js • pwaService.js'}</span>
+                <span class="text-[10px] font-mono text-indigo-400 font-semibold shrink-0">ES6+</span>
               </div>
-              <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500"><code>${codeSnippet}</code></pre>
+              <pre class="text-[11px] sm:text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 pb-1 w-full max-w-full"><code>${codeSnippet}</code></pre>
             </div>
 
             <!-- Tags Stack -->
-            <div class="flex flex-wrap gap-2 mb-6">
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
               ${tagsHtml}
             </div>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800/80">
+          <div class="flex items-center gap-2.5 sm:gap-3 pt-4 border-t border-slate-800/80">
             ${project.repoUrl ? `
-              <a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700/60 shadow-sm">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 14.42 22 12A10 10 0 0 0 12 2z"/></svg>
+              <a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 sm:flex-none justify-center inline-flex items-center gap-1.5 sm:gap-2 text-xs font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700/60 shadow-sm active:scale-95 text-center">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 14.42 22 12A10 10 0 0 0 12 2z"/></svg>
                 <span>GitHub Repo</span>
               </a>` : ''}
-            <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow">
+            <a href="${project.demoUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 sm:flex-none justify-center inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 sm:px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-colors shadow active:scale-95 text-center">
               <span>${project.demoLabel}</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </a>
           </div>
         </div>
       `;
 
       const card = `
-        <article class="code-preview-card bento-card p-6 sm:p-9 bg-grid-pattern" data-parallax-speed="${parallaxSpeed}">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <article class="code-preview-card bento-card p-5 sm:p-9 bg-grid-pattern w-full min-w-0" data-parallax-speed="${parallaxSpeed}">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center w-full min-w-0">
             ${glassFrameCol}
             ${detailsCol}
           </div>
@@ -681,7 +688,7 @@ class PortfolioView {
       return `
         <button 
           type="button" 
-          class="cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
+          class="cli-tab-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all whitespace-nowrap shrink-0 ${
             isActive 
               ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
@@ -704,62 +711,62 @@ class PortfolioView {
     `).join('');
 
     const labCard = `
-      <article class="code-preview-card bento-card p-6 sm:p-9 bg-grid-pattern" data-parallax-speed="0.01">
+      <article class="code-preview-card bento-card p-5 sm:p-9 bg-grid-pattern w-full min-w-0" data-parallax-speed="0.01">
         
         <!-- App Switcher Tabs -->
-        <div class="flex flex-wrap items-center gap-2 mb-8 border-b border-slate-800/80 pb-4">
-          <span class="text-xs font-mono text-slate-400 mr-2 flex items-center gap-1.5">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-6 sm:mb-8 border-b border-slate-800/80 pb-4 w-full min-w-0">
+          <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5 shrink-0">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Select Environment:</span>
+            <span>Environment:</span>
           </span>
-          <div id="cliTabsGroup" class="flex flex-wrap items-center gap-2">
+          <div id="cliTabsGroup" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full sm:flex-wrap">
             ${tabsHtml}
           </div>
         </div>
 
         <!-- Main Dual Column Display -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-stretch w-full min-w-0">
           
           <!-- Column 1: Live Interactive Terminal Console (lg:col-span-6) -->
-          <div class="lg:col-span-6 flex flex-col">
-            <div class="glass-squircle-frame relative w-full h-[470px] flex flex-col justify-between shadow-2xl border border-white/10">
+          <div class="lg:col-span-6 flex flex-col w-full min-w-0">
+            <div class="glass-squircle-frame relative w-full h-[380px] sm:h-[440px] lg:h-[470px] flex flex-col justify-between shadow-2xl border border-white/10">
               
               <!-- Terminal Top Bar -->
-              <div class="h-10 px-4 bg-slate-900/90 backdrop-blur-md flex items-center justify-between border-b border-white/10 select-none z-20 shrink-0">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm border border-amber-600/50"></span>
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/50"></span>
-                  <span id="cliTerminalTitle" class="text-[11px] font-mono text-slate-400 ml-2">bash - ${app.command}</span>
+              <div class="h-10 px-3 sm:px-4 bg-slate-900/90 backdrop-blur-md flex items-center justify-between border-b border-white/10 select-none z-20 shrink-0">
+                <div class="flex items-center gap-1.5 truncate mr-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm border border-rose-600/50 shrink-0"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-sm border border-amber-600/50 shrink-0"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm border border-emerald-600/50 shrink-0"></span>
+                  <span id="cliTerminalTitle" class="text-[10px] sm:text-[11px] font-mono text-slate-400 ml-1.5 truncate">bash - ${app.command}</span>
                 </div>
-                <button id="cliResetBtn" type="button" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50" title="Restart simulation">
+                <button id="cliResetBtn" type="button" class="text-xs font-mono text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-2.5 py-1 rounded bg-slate-800/60 hover:bg-slate-700/80 border border-slate-700/50 shrink-0 active:scale-95" title="Restart simulation">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                   <span>Restart</span>
                 </button>
               </div>
 
               <!-- Terminal Output Screen -->
-              <div id="cliTerminalScreen" class="flex-1 p-4 bg-[#060913] font-mono text-xs text-slate-200 overflow-y-auto space-y-1.5 selection:bg-indigo-600 selection:text-white whitespace-pre-wrap">
+              <div id="cliTerminalScreen" class="flex-1 p-3 sm:p-4 bg-[#060913] font-mono text-xs text-slate-200 overflow-y-auto space-y-1.5 selection:bg-indigo-600 selection:text-white whitespace-pre-wrap break-words">
                 <!-- Dynamic logs injected by terminal runner -->
               </div>
 
               <!-- Terminal Interactive Prompt Input Bar -->
-              <form id="cliTerminalForm" class="p-3 bg-slate-900/90 backdrop-blur-md border-t border-white/10 flex items-center gap-2 select-none z-20 shrink-0">
+              <form id="cliTerminalForm" class="p-2 sm:p-3 bg-slate-900/90 backdrop-blur-md border-t border-white/10 flex items-center gap-2 select-none z-20 shrink-0">
                 <span id="cliPromptLabel" class="text-xs font-mono text-emerald-400 shrink-0">&gt;</span>
                 <input 
                   type="text" 
                   id="cliTerminalInput" 
-                  class="flex-1 bg-slate-950/80 border border-slate-700/70 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                  class="flex-1 min-w-0 bg-slate-950/80 border border-slate-700/70 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-[15px] sm:text-xs"
                   placeholder="Enter input..."
                   autocomplete="off"
                   spellcheck="false" />
-                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-semibold transition-colors shrink-0">
+                <button type="submit" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-semibold transition-colors shrink-0 active:scale-95">
                   Send
                 </button>
               </form>
 
               <!-- Interactive Quick Shortcuts -->
-              <div id="cliShortcutsBar" class="px-3 py-2 bg-slate-950/90 border-t border-white/5 flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+              <div id="cliShortcutsBar" class="px-2.5 sm:px-3 py-2 bg-slate-950/90 border-t border-white/5 flex items-center gap-1.5 text-xs font-mono overflow-x-auto scrollbar-none whitespace-nowrap">
                 <!-- Dynamic shortcuts for fast clicking -->
               </div>
 
@@ -767,8 +774,8 @@ class PortfolioView {
           </div>
 
           <!-- Column 2: Architectural Details & Code Inspector (lg:col-span-6) -->
-          <div class="lg:col-span-6 flex flex-col justify-between">
-            <div>
+          <div class="lg:col-span-6 flex flex-col justify-between w-full min-w-0">
+            <div class="w-full min-w-0">
               <!-- Badge -->
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-3 shadow-sm">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -790,7 +797,7 @@ class PortfolioView {
               </ul>
 
               <!-- Terminal Code Inspection Box -->
-              <div id="cliCodeWindow" class="terminal-window p-4 mb-5 shadow-inner">
+              <div id="cliCodeWindow" class="terminal-window p-3 sm:p-4 mb-4 sm:mb-5 shadow-inner w-full min-w-0 overflow-hidden">
                 <div class="flex items-center justify-between mb-2.5 border-b border-slate-800/80 pb-2">
                   <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block shadow-sm"></span>
@@ -798,9 +805,9 @@ class PortfolioView {
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
                     <span id="cliCodeFile" class="text-[11px] font-mono text-slate-400 ml-1.5">${app.id === 'calendar-cli' ? 'calenderModel.js' : app.id === 'tictactoe-cli' ? 'tictactoe.js' : 'atm.js'}</span>
                   </div>
-                  <span class="text-[10px] font-mono text-indigo-400 font-semibold">ES6+ CLI</span>
+                  <span class="text-[10px] font-mono text-indigo-400 font-semibold shrink-0">ES6+ CLI</span>
                 </div>
-                <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 max-h-[160px] overflow-y-auto"><code id="cliCodeContent">${this.escapeHtml(app.codeSnippet)}</code></pre>
+                <pre class="text-xs text-slate-300 font-mono leading-relaxed overflow-x-auto selection:bg-indigo-500 max-h-[160px] overflow-y-auto w-full max-w-full pb-1"><code id="cliCodeContent">${this.escapeHtml(app.codeSnippet)}</code></pre>
               </div>
 
               <!-- Tags Stack -->
@@ -833,7 +840,7 @@ class PortfolioView {
     const tabBtns = this.elements.cliLabContainer.querySelectorAll('.cli-tab-btn');
     tabBtns.forEach((btn, idx) => {
       const isActive = idx === newIndex;
-      btn.className = `cli-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all ${
+      btn.className = `cli-tab-btn px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-mono font-medium transition-all whitespace-nowrap shrink-0 ${
         isActive 
           ? 'bg-indigo-600/30 text-white border border-indigo-500/50 shadow-sm' 
           : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
@@ -962,14 +969,14 @@ class PortfolioView {
         if (!shortcutsBar) return;
         shortcutsBar.innerHTML = '';
         const span = document.createElement('span');
-        span.className = 'text-slate-500 mr-1';
+        span.className = 'text-slate-500 mr-1 shrink-0 text-xs';
         span.textContent = 'Quick:';
         shortcutsBar.appendChild(span);
 
         shortcuts.forEach(({ label, value }) => {
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'px-2 py-0.5 rounded bg-slate-900 border border-slate-700/70 hover:border-indigo-400 text-slate-300 hover:text-white transition-colors';
+          btn.className = 'px-2.5 py-1 rounded bg-slate-900 border border-slate-700/70 hover:border-indigo-400 active:bg-indigo-900/50 text-slate-300 hover:text-white transition-colors shrink-0 text-xs font-mono touch-manipulation';
           btn.textContent = label;
           btn.addEventListener('click', () => {
             input.value = value;
@@ -1337,14 +1344,14 @@ class PortfolioView {
       const category = categories[i];
       const speed = speeds[i % speeds.length];
       const listItems = category.items
-        .map((item) => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>${item}</li>`)
+        .map((item) => `<li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-400 shrink-0"></span><span>${item}</span></li>`)
         .join('');
 
       const col = `
-        <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="${speed}">
+        <div class="card-glass bento-card p-5 sm:p-6 flex flex-col justify-between w-full min-w-0" data-parallax-speed="${speed}">
           <div>
-            <div class="text-brand-400 text-xs font-mono font-semibold uppercase tracking-wider mb-4 pb-2 border-b border-slate-800/80">${category.index}. ${category.title}</div>
-            <ul class="space-y-2.5 text-sm text-slate-300">
+            <div class="text-brand-400 text-xs font-mono font-semibold uppercase tracking-wider mb-3 sm:mb-4 pb-2 border-b border-slate-800/80">${category.index}. ${category.title}</div>
+            <ul class="space-y-2 sm:space-y-2.5 text-xs sm:text-sm text-slate-300">
               ${listItems}
             </ul>
           </div>
@@ -1370,18 +1377,18 @@ class PortfolioView {
       const cert = certifications[i];
       const speed = speeds[i % speeds.length];
       const card = `
-        <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="${speed}">
+        <div class="card-glass bento-card p-5 sm:p-6 flex flex-col justify-between w-full min-w-0" data-parallax-speed="${speed}">
           <div>
             <div class="flex items-center justify-between mb-3">
               <span class="text-xs font-mono text-emerald-400">${cert.track}</span>
               <span class="w-2 h-2 rounded-full bg-emerald-400/80"></span>
             </div>
-            <h3 class="text-base font-bold text-white mb-2">${cert.title}</h3>
-            <p class="text-xs text-slate-400 leading-relaxed mb-5">
+            <h3 class="text-sm sm:text-base font-bold text-white mb-2">${cert.title}</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4 sm:mb-5">
               ${cert.description}
             </p>
           </div>
-          <a href="${cert.verifyUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-400 hover:text-brand-300 transition-colors pt-3 border-t border-slate-800/80">
+          <a href="${cert.verifyUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-semibold text-brand-400 hover:text-brand-300 transition-colors pt-3 border-t border-slate-800/80 active:scale-95">
             <span>Verify Credential #${cert.id}</span>
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </a>
@@ -1405,15 +1412,15 @@ class PortfolioView {
     for (let i = 0; i < experiences.length; i++) {
       const exp = experiences[i];
       const isLast = i === experiences.length - 1;
-      const borderClass = isLast ? '' : 'border-b border-slate-800/80 pb-5';
+      const borderClass = isLast ? '' : 'border-b border-slate-800/80 pb-4 sm:pb-5';
 
       const entry = `
-        <div class="${borderClass}">
+        <div class="${borderClass} w-full min-w-0">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-            <h3 class="text-base font-bold text-white">${exp.role}</h3>
+            <h3 class="text-sm sm:text-base font-bold text-white">${exp.role}</h3>
             <span class="text-xs font-mono text-slate-400">${exp.period}</span>
           </div>
-          <p class="text-sm text-slate-300 leading-relaxed">
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
             ${exp.description}
           </p>
         </div>
@@ -1449,8 +1456,80 @@ class PortfolioView {
       this.elements.copyEmailText.textContent = originalText;
     }, 2000);
   }
-}
 
+  /**
+   * Binds mobile hamburger navigation menu toggle, link clicks, and outside-tap dismiss.
+   */
+  bindMobileMenu() {
+    if (!this.elements.mobileMenuBtn || !this.elements.mobileMenu) return;
+
+    const toggleMenu = (open) => {
+      const isOpening = open !== undefined ? open : this.elements.mobileMenu.classList.contains('hidden');
+      if (isOpening) {
+        this.elements.mobileMenu.classList.remove('hidden');
+        this.elements.mobileMenuBtn.setAttribute('aria-expanded', 'true');
+        if (this.elements.mobileMenuOpenIcon) this.elements.mobileMenuOpenIcon.classList.add('hidden');
+        if (this.elements.mobileMenuCloseIcon) this.elements.mobileMenuCloseIcon.classList.remove('hidden');
+      } else {
+        this.elements.mobileMenu.classList.add('hidden');
+        this.elements.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        if (this.elements.mobileMenuOpenIcon) this.elements.mobileMenuOpenIcon.classList.remove('hidden');
+        if (this.elements.mobileMenuCloseIcon) this.elements.mobileMenuCloseIcon.classList.add('hidden');
+      }
+    };
+
+    this.elements.mobileMenuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // Close menu when clicking any mobile nav link
+    const links = this.elements.mobileMenu.querySelectorAll('.mobile-nav-link');
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        toggleMenu(false);
+      });
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!this.elements.mobileMenu.contains(e.target) && !this.elements.mobileMenuBtn.contains(e.target)) {
+        toggleMenu(false);
+      }
+    });
+
+    // Close on window resize to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        toggleMenu(false);
+      }
+    }, { passive: true });
+  }
+
+  /**
+   * Binds floating back-to-top button visibility and smooth scroll handler.
+   */
+  bindBackToTop() {
+    if (!this.elements.backToTopBtn) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 350) {
+        this.elements.backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-3');
+      } else {
+        this.elements.backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-3');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    this.elements.backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    });
+  }
+}
 
 /* === Bundled: js/controllers/PortfolioController.js === */
 /**
@@ -1477,6 +1556,8 @@ class PortfolioController {
   init() {
     this.renderAll();
     this.view.bindCopyEmail(this.handleCopyEmail.bind(this));
+    this.view.bindMobileMenu();
+    this.view.bindBackToTop();
   }
 
   /**
@@ -1521,7 +1602,6 @@ class PortfolioController {
   }
 }
 
-
 /* === Bundled: js/MotionFX.js === */
 /**
  * @fileoverview Creative Motion & Parallax FX Engine (Bento Glassmorphism 2.0).
@@ -1539,8 +1619,11 @@ class MotionFX {
     this.laserDot = null;
     this.canvas = null;
     this.ctx = null;
-    this.particles = [];
-    this.particleCount = 50;
+    this.constellations = [];
+    this.ambientStars = [];
+    this.comets = [];
+    this.cometParticles = [];
+    this.lastCometTime = performance.now() - 16000; // First bright comet glides across in ~12 seconds
     this.scrollY = window.scrollY;
     this.parallaxItems = [];
     this.rafId = null;
@@ -1550,14 +1633,15 @@ class MotionFX {
    * Initializes motion elements, canvas context, event listeners, and animation loop.
    */
   init() {
-    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const hasFinePointer = window.matchMedia('(pointer: fine) and (hover: hover)').matches;
+    this.isMobile = !hasFinePointer || window.innerWidth < 768;
 
     this.createDomElements(hasFinePointer);
     this.initCanvas();
     this.bindEvents(hasFinePointer);
-    this.initCardTilt();
-    this.initMagneticButtons();
-    this.initParallaxScroll();
+    this.initCardTilt(hasFinePointer);
+    this.initMagneticButtons(hasFinePointer);
+    this.initParallaxScroll(this.isMobile);
 
     this.animate();
   }
@@ -1567,7 +1651,7 @@ class MotionFX {
    * @param {boolean} hasFinePointer - Indicates precision mouse pointer availability.
    */
   createDomElements(hasFinePointer) {
-    // 1. Precise Center Laser Pointer (No trailing outer ring)
+    // 1. Precise Center Laser Pointer (0ms instant hardware tracking, fine pointer only)
     if (hasFinePointer) {
       this.laserDot = document.createElement('div');
       this.laserDot.className = 'custom-laser-dot';
@@ -1583,25 +1667,244 @@ class MotionFX {
   }
 
   /**
-   * Populates ambient stardust particle physics models.
+   * Procedural generator for authentic real-world astronomical constellations.
+   * Accurately models real stellar asterisms: Ursa Major, Orion, Cassiopeia, Crux, Cygnus, Scorpius.
+   * @param {number} archetypeIndex - Constellation selector.
+   * @param {number} cx - X center origin coordinate.
+   * @param {number} cy - Y center origin coordinate.
+   * @param {Object} palette - Color palette scheme.
+   * @returns {Object} Configured constellation cluster.
+   */
+  createConstellation(archetypeIndex, cx, cy, palette) {
+    let localStars = [];
+    let edges = [];
+    let name = '';
+
+    switch (archetypeIndex % 6) {
+      case 0: // 1. URSA MAJOR (Biduk Besar / The Great Bear - Big Dipper Asterism)
+        name = 'Ursa Major';
+        localStars = [
+          { dx: -105, dy: -28, r: 2.1, isAlpha: false, name: 'Alkaid' },
+          { dx: -76, dy: -20, r: 2.2, isAlpha: false, name: 'Mizar' },
+          { dx: -42, dy: -12, r: 2.5, isAlpha: true, name: 'Alioth' },
+          { dx: -6, dy: -10, r: 1.8, isAlpha: false, name: 'Megrez' },
+          { dx: -14, dy: 30, r: 2.1, isAlpha: false, name: 'Phecda' },
+          { dx: 42, dy: 35, r: 2.4, isAlpha: true, name: 'Merak' },
+          { dx: 48, dy: -8, r: 2.7, isAlpha: true, name: 'Dubhe' },
+        ];
+        // Handle: 0-1-2-3; Bowl: 3-4-5-6-3
+        edges = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 3]];
+        break;
+
+      case 1: // 2. ORION (Sang Pemburu / The Hunter)
+        name = 'Orion';
+        localStars = [
+          { dx: -45, dy: -55, r: 3.0, isAlpha: true, customColor: '251, 146, 60', name: 'Betelgeuse' }, // Orange-red supergiant
+          { dx: 42, dy: -48, r: 2.4, isAlpha: false, name: 'Bellatrix' },
+          { dx: 0, dy: -70, r: 1.8, isAlpha: false, name: 'Meissa' },
+          { dx: -22, dy: -2, r: 2.2, isAlpha: false, name: 'Alnitak' }, // Belt 1
+          { dx: 0, dy: 0, r: 2.5, isAlpha: true, name: 'Alnilam' },     // Belt 2
+          { dx: 22, dy: 2, r: 2.2, isAlpha: false, name: 'Mintaka' },   // Belt 3
+          { dx: -38, dy: 58, r: 2.3, isAlpha: false, name: 'Saiph' },
+          { dx: 46, dy: 54, r: 2.9, isAlpha: true, customColor: '186, 230, 253', name: 'Rigel' }, // Blue supergiant
+        ];
+        // Shoulders to head & between shoulders; down to belt; belt line; belt to feet; between feet
+        edges = [
+          [0, 2], [2, 1], [0, 1],
+          [0, 3], [1, 5],
+          [3, 4], [4, 5],
+          [3, 6], [5, 7],
+          [6, 7]
+        ];
+        break;
+
+      case 2: // 3. CASSIOPEIA (Ratu Kasiopeia / The Celestial W)
+        name = 'Cassiopeia';
+        localStars = [
+          { dx: -68, dy: -20, r: 2.1, isAlpha: false, name: 'Segin' },
+          { dx: -34, dy: 24, r: 2.3, isAlpha: false, name: 'Ruchbah' },
+          { dx: 0, dy: -24, r: 2.8, isAlpha: true, name: 'Navi' },
+          { dx: 38, dy: 22, r: 2.6, isAlpha: true, customColor: '253, 186, 116', name: 'Schedar' },
+          { dx: 72, dy: -18, r: 2.3, isAlpha: false, name: 'Caph' },
+        ];
+        edges = [[0, 1], [1, 2], [2, 3], [3, 4]];
+        break;
+
+      case 3: // 4. CRUX (Salib Selatan / Southern Cross / Bintang Pari)
+        name = 'Crux';
+        localStars = [
+          { dx: 0, dy: -48, r: 2.6, isAlpha: true, customColor: '254, 215, 170', name: 'Gacrux' }, // Reddish top
+          { dx: 0, dy: 50, r: 2.9, isAlpha: true, customColor: '186, 230, 253', name: 'Acrux' },   // Brilliant blue base
+          { dx: -35, dy: 2, r: 2.6, isAlpha: true, name: 'Mimosa' },
+          { dx: 32, dy: -6, r: 2.1, isAlpha: false, name: 'Delta Cru' },
+          { dx: 12, dy: 18, r: 1.5, isAlpha: false, name: 'Ginan' }, // 5th star
+        ];
+        edges = [
+          [0, 1], [2, 3],
+          [0, 2], [2, 1], [1, 3], [3, 0]
+        ];
+        break;
+
+      case 4: // 5. CYGNUS (Sang Angsa / Northern Cross)
+        name = 'Cygnus';
+        localStars = [
+          { dx: 0, dy: -60, r: 2.9, isAlpha: true, customColor: '224, 242, 254', name: 'Deneb' }, // Bright tail
+          { dx: 0, dy: 0, r: 2.5, isAlpha: true, name: 'Sadr' },   // Chest center
+          { dx: 0, dy: 65, r: 2.1, isAlpha: false, name: 'Albireo' }, // Beak
+          { dx: -55, dy: -10, r: 2.2, isAlpha: false, name: 'Gienah' }, // East wing
+          { dx: 55, dy: -10, r: 2.2, isAlpha: false, name: 'Delta Cyg' }, // West wing
+          { dx: -90, dy: -25, r: 1.7, isAlpha: false, name: 'Zeta Cyg' },
+          { dx: 90, dy: -25, r: 1.7, isAlpha: false, name: 'Iota Cyg' },
+        ];
+        edges = [
+          [0, 1], [1, 2],
+          [5, 3], [3, 1], [1, 4], [4, 6]
+        ];
+        break;
+
+      case 5: // 6. SCORPIUS (Kalajengking / The Scorpion)
+      default:
+        name = 'Scorpius';
+        localStars = [
+          { dx: -65, dy: -45, r: 2.2, isAlpha: false, name: 'Graffias' }, // Claw
+          { dx: -32, dy: -20, r: 3.1, isAlpha: true, customColor: '248, 113, 113', name: 'Antares' }, // Fiery Red Heart
+          { dx: 5, dy: -10, r: 2.0, isAlpha: false, name: 'Wei' },
+          { dx: 30, dy: 10, r: 1.9, isAlpha: false, name: 'Mu Sco' },
+          { dx: 45, dy: 40, r: 2.3, isAlpha: false, name: 'Sargas' },
+          { dx: 30, dy: 65, r: 2.6, isAlpha: true, name: 'Shaula' }, // Stinger
+          { dx: 14, dy: 58, r: 1.8, isAlpha: false, name: 'Lesath' },
+        ];
+        edges = [
+          [0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]
+        ];
+        break;
+    }
+
+    const stars = localStars.map((s) => ({
+      ...s,
+      dispX: 0,
+      dispY: 0,
+      velX: 0,
+      velY: 0,
+      twinklePhase: Math.random() * Math.PI * 2,
+      twinkleSpeed: 0.012 + Math.random() * 0.02,
+      baseAlpha: s.isAlpha ? 0.82 : 0.55,
+      currentAlpha: s.isAlpha ? 0.82 : 0.55,
+      color: s.customColor || (s.isAlpha ? palette.alphaStarColor : palette.starColor),
+    }));
+
+    return {
+      name,
+      cx,
+      cy,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      lineColor: palette.lineColor,
+      labelAlpha: 0,
+      stars,
+      edges,
+    };
+  }
+
+  /**
+   * Populates ambient stardust and procedurally distributes celestial constellations.
    */
   initCanvas() {
+    if (!this.canvas) return;
     const w = this.canvas.width;
     const h = this.canvas.height;
-    this.particles = [];
 
-    for (let i = 0; i < this.particleCount; i++) {
-      this.particles.push({
+    this.constellations = [];
+    this.ambientStars = [];
+    this.comets = [];
+    this.cometParticles = [];
+    this.lastCometTime = performance.now() - 16000;
+
+    const palettes = [
+      { starColor: '224, 242, 254', lineColor: '129, 140, 248', alphaStarColor: '147, 197, 253' }, // Indigo-Blue
+      { starColor: '207, 250, 254', lineColor: '56, 189, 248', alphaStarColor: '125, 211, 252' }, // Cyan-Sky
+      { starColor: '243, 232, 255', lineColor: '168, 85, 247', alphaStarColor: '192, 132, 252' }, // Violet-Purple
+      { starColor: '209, 250, 229', lineColor: '52, 211, 153', alphaStarColor: '110, 231, 183' }, // Emerald-Teal
+      { starColor: '254, 243, 199', lineColor: '245, 158, 11', alphaStarColor: '252, 211, 77' }, // Golden-Amber
+    ];
+
+    const constellationCount = this.isMobile ? 3 : 6;
+    const ambientCount = this.isMobile ? 18 : 35;
+
+    // Distribute constellations smoothly across celestial quadrants
+    const cols = this.isMobile ? 1 : 3;
+    const rows = Math.ceil(constellationCount / cols);
+    const colW = w / cols;
+    const rowH = h / rows;
+
+    for (let i = 0; i < constellationCount; i++) {
+      const colIdx = i % cols;
+      const rowIdx = Math.floor(i / cols);
+      const cx = colIdx * colW + colW * (0.2 + Math.random() * 0.6);
+      const cy = rowIdx * rowH + rowH * (0.2 + Math.random() * 0.6);
+      const palette = palettes[i % palettes.length];
+      this.constellations.push(this.createConstellation(i, cx, cy, palette));
+    }
+
+    // Ambient twinkling dust stars (deep space background)
+    for (let i = 0; i < ambientCount; i++) {
+      const bvx = (Math.random() - 0.5) * 0.12;
+      const bvy = (Math.random() - 0.5) * 0.12;
+      this.ambientStars.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: Math.random() * 1.6 + 0.6,
-        baseAlpha: Math.random() * 0.4 + 0.15,
-        alpha: Math.random() * 0.4 + 0.15,
-        color: i % 3 === 0 ? '99, 102, 241' : (i % 3 === 1 ? '56, 189, 248' : '168, 85, 247'),
+        vx: bvx,
+        vy: bvy,
+        baseVx: bvx,
+        baseVy: bvy,
+        radius: Math.random() * 1.1 + 0.5,
+        baseAlpha: Math.random() * 0.45 + 0.15,
+        currentAlpha: 0.3,
+        twinklePhase: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.01 + Math.random() * 0.025,
+        color: i % 2 === 0 ? '148, 163, 184' : '203, 213, 225',
       });
     }
+  }
+
+  /**
+   * Spawns a rare, magnificent bright celestial comet with long ion and dust tails.
+   * Glides gracefully across the sky every 28 - 45 seconds.
+   * @param {number} now - High-resolution timestamp.
+   */
+  spawnBrightComet(now) {
+    if (!this.canvas || this.comets.length >= 2) return;
+    const w = this.canvas.width;
+    const h = this.canvas.height;
+
+    // Diagonal trajectories from upper boundaries
+    const fromLeft = Math.random() > 0.5;
+    const startX = fromLeft ? Math.random() * (w * 0.4) - 40 : Math.random() * (w * 0.4) + w * 0.6;
+    const startY = -40;
+
+    const angle = fromLeft
+      ? (Math.PI / 4) + (Math.random() - 0.5) * 0.25
+      : (Math.PI * 0.75) + (Math.random() - 0.5) * 0.25;
+
+    const speed = 3.6 + Math.random() * 1.6; // Majestic celestial glide speed
+    const tailLength = 250 + Math.random() * 110; // Long 250 - 360px tail
+
+    this.comets.push({
+      x: startX,
+      y: startY,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      tailLength,
+      alpha: 0,
+      maxAlpha: 0.95,
+      life: 0,
+      maxLife: 280 + Math.random() * 80, // ~4.5 to 6 seconds flight time
+      colorCore: '255, 255, 255',
+      colorIon: Math.random() > 0.4 ? '56, 189, 248' : '168, 85, 247',
+      colorDust: '224, 242, 254',
+    });
+
+    this.lastCometTime = now;
   }
 
   /**
@@ -1611,6 +1914,7 @@ class MotionFX {
     if (!this.canvas) return;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
+    this.initCanvas();
   }
 
   /**
@@ -1627,6 +1931,7 @@ class MotionFX {
       this.mouse.targetY = e.clientY;
 
       if (this.laserDot) {
+        this.laserDot.style.display = 'block';
         this.laserDot.style.opacity = '1';
         this.laserDot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
       }
@@ -1644,8 +1949,26 @@ class MotionFX {
       }
     });
 
-    // Active Navigation Scrollspy & Instant Click Sync
-    const navLinks = document.querySelectorAll('.nav-link');
+    // Touchscreen Guard: If a touchscreen is tapped at any point, immediately hide custom laser dot
+    window.addEventListener('touchstart', () => {
+      if (this.laserDot) {
+        this.laserDot.style.display = 'none';
+        this.laserDot.style.opacity = '0';
+      }
+      document.body.classList.remove('cursor-hover', 'cursor-active');
+    }, { passive: true });
+
+    if (hasFinePointer) {
+      document.addEventListener('mousedown', () => {
+        document.body.classList.add('cursor-active');
+      });
+      document.addEventListener('mouseup', () => {
+        document.body.classList.remove('cursor-active');
+      });
+    }
+
+    // Active Navigation Scrollspy & Instant Click Sync (Desktop & Mobile)
+    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
     const sectionIds = ['projects', 'cli-lab', 'skills', 'certifications', 'about'];
     let isManualClickNavigating = false;
     let clickNavTimer = null;
@@ -1714,7 +2037,7 @@ class MotionFX {
     if (hasFinePointer) {
       document.addEventListener('mouseover', (e) => {
         const target = e.target;
-        if (target && target.closest('a, button, [data-interactive="true"], .card-glass, .code-preview-card, .bento-card')) {
+        if (target && target.closest('a, button, [data-interactive="true"], input, select, textarea, [role="button"], label, summary')) {
           document.body.classList.add('cursor-hover');
         } else {
           document.body.classList.remove('cursor-hover');
@@ -1728,7 +2051,8 @@ class MotionFX {
    * Gentle, grounded 3D perspective (max 2.0 deg) with edge-safe smoothing
    * to eliminate corner hit-test glitching.
    */
-  initCardTilt() {
+  initCardTilt(hasFinePointer) {
+    if (!hasFinePointer) return; // Touchscreens don't use cursor hover tilt
     const bindCards = () => {
       const cards = document.querySelectorAll('.card-glass, .code-preview-card, .bento-card');
       cards.forEach((card) => {
@@ -1806,7 +2130,8 @@ class MotionFX {
   /**
    * Magnetic snap effect for interactive buttons
    */
-  initMagneticButtons() {
+  initMagneticButtons(hasFinePointer) {
+    if (!hasFinePointer) return; // Only for precision mouse cursors
     const bindButtons = () => {
       const buttons = document.querySelectorAll('header a, header button, .magnetic-btn, #copyEmailBtn');
       buttons.forEach((btn) => {
@@ -1879,7 +2204,8 @@ class MotionFX {
    * Folio-v2 inspired Smooth Inertia Parallax Scroll Engine
    * Gentle, clamped micro-offsets with lerp damping (0.08)
    */
-  initParallaxScroll() {
+  initParallaxScroll(isMobile) {
+    if (isMobile) return; // Native momentum scroll is smoothest on mobile touch devices
     this.registerParallaxElements();
     this.updateParallaxTargets();
 
@@ -1916,74 +2242,340 @@ class MotionFX {
    * Main requestAnimationFrame continuous physics loop for lerp parallax and constellation particles.
    */
   animate() {
-    // 1. Folio-v2 Smooth Inertia Parallax Scroll Animation (Lerp Damping)
-    for (let i = 0; i < this.parallaxItems.length; i++) {
-      const item = this.parallaxItems[i];
-      
-      // Interpolate with subtle ease damping (0.08)
-      item.currentY += (item.targetY - item.currentY) * 0.08;
+    // 1. Folio-v2 Smooth Inertia Parallax Scroll Animation (Skip on mobile for pure 120Hz native scrolling)
+    if (!this.isMobile) {
+      for (let i = 0; i < this.parallaxItems.length; i++) {
+        const item = this.parallaxItems[i];
+        
+        // Interpolate with subtle ease damping (0.08)
+        item.currentY += (item.targetY - item.currentY) * 0.08;
 
-      if (Math.abs(item.targetY - item.currentY) > 0.01) {
-        const offsetPx = item.currentY.toFixed(2);
+        if (Math.abs(item.targetY - item.currentY) > 0.01) {
+          const offsetPx = item.currentY.toFixed(2);
 
-        if (item.el.dataset.tiltBound) {
-          item.el.style.setProperty('--parallax-offset', `${offsetPx}px`);
-          if (!item.el.matches(':hover')) {
-            item.el.style.transform = `perspective(1200px) translate3d(0, ${offsetPx}px, 0) rotateX(0deg) rotateY(0deg)`;
+          if (item.el.dataset.tiltBound) {
+            item.el.style.setProperty('--parallax-offset', `${offsetPx}px`);
+            if (!item.el.matches(':hover')) {
+              item.el.style.transform = `perspective(1200px) translate3d(0, ${offsetPx}px, 0) rotateX(0deg) rotateY(0deg)`;
+            }
+          } else {
+            item.el.style.transform = `translate3d(0, ${offsetPx}px, 0)`;
           }
-        } else {
-          item.el.style.transform = `translate3d(0, ${offsetPx}px, 0)`;
         }
       }
     }
 
-    // 2. Ambient Particles Simulation
+    // 2. Celestial Constellation & Stardust Simulation
     if (this.ctx && this.canvas) {
+      const now = performance.now();
       const w = this.canvas.width;
       const h = this.canvas.height;
       this.ctx.clearRect(0, 0, w, h);
 
-      for (let i = 0; i < this.particles.length; i++) {
-        const p = this.particles[i];
+      // A. Ambient Twinkling Deep-Space Stars
+      for (let i = 0; i < this.ambientStars.length; i++) {
+        const star = this.ambientStars[i];
 
-        p.x += p.vx;
-        p.y += p.vy;
+        // Mouse repulsion on ambient stars
+        if (!this.isMobile && this.mouse.targetX > -500) {
+          const dx = star.x - this.mouse.targetX;
+          const dy = star.y - this.mouse.targetY;
+          const dist = Math.hypot(dx, dy);
+          const repelRadius = 110;
 
-        if (p.x < 0) p.x = w;
-        if (p.x > w) p.x = 0;
-        if (p.y < 0) p.y = h;
-        if (p.y > h) p.y = 0;
-
-        // Mouse repulsion physics
-        const dx = this.mouse.targetX - p.x;
-        const dy = this.mouse.targetY - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120 && dist > 0) {
-          const force = (120 - dist) / 120;
-          p.x -= (dx / dist) * force * 3;
-          p.y -= (dy / dist) * force * 3;
-        }
-
-        // Draw particle
-        this.ctx.beginPath();
-        this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
-        this.ctx.fill();
-
-        // Constellation connective lines
-        for (let j = i + 1; j < this.particles.length; j++) {
-          const p2 = this.particles[j];
-          const dist2 = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist2 < 90) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(p.x, p.y);
-            this.ctx.lineTo(p2.x, p2.y);
-            const lineAlpha = (1 - dist2 / 90) * 0.12;
-            this.ctx.strokeStyle = `rgba(129, 140, 248, ${lineAlpha})`;
-            this.ctx.lineWidth = 0.7;
-            this.ctx.stroke();
+          if (dist < repelRadius && dist > 0) {
+            const force = Math.pow(1 - dist / repelRadius, 1.2) * 2.2;
+            star.vx += (dx / dist) * force;
+            star.vy += (dy / dist) * force;
           }
         }
+
+        // Return ambient stars back to peaceful drifting speed
+        star.vx = star.vx * 0.94 + star.baseVx * 0.06;
+        star.vy = star.vy * 0.94 + star.baseVy * 0.06;
+
+        star.x += star.vx;
+        star.y += star.vy;
+
+        if (star.x < 0) star.x = w;
+        if (star.x > w) star.x = 0;
+        if (star.y < 0) star.y = h;
+        if (star.y > h) star.y = 0;
+
+        const twinkle = Math.sin(now * star.twinkleSpeed * 0.08 + star.twinklePhase);
+        star.currentAlpha = Math.max(0.08, star.baseAlpha + twinkle * (star.baseAlpha * 0.4));
+
+        this.ctx.beginPath();
+        this.ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = `rgba(${star.color}, ${star.currentAlpha})`;
+        this.ctx.fill();
+      }
+
+      // B. Constellations (Geometric Asterisms, Mouse Repulsion & Spring Reformation)
+      for (let i = 0; i < this.constellations.length; i++) {
+        const c = this.constellations[i];
+
+        // Smooth constellation drift
+        c.cx += c.vx;
+        c.cy += c.vy;
+
+        // Wrap constellation center smoothly when completely off-screen
+        if (c.cx < -160) c.cx = w + 160;
+        if (c.cx > w + 160) c.cx = -160;
+        if (c.cy < -160) c.cy = h + 160;
+        if (c.cy > h + 160) c.cy = -160;
+
+        // Physics: Repulsion when mouse approaches, and elastic spring return to constellation home
+        for (let j = 0; j < c.stars.length; j++) {
+          const s = c.stars[j];
+          const homeX = c.cx + s.dx;
+          const homeY = c.cy + s.dy;
+          const curX = homeX + s.dispX;
+          const curY = homeY + s.dispY;
+
+          // 1. Repulsion force from mouse cursor
+          if (!this.isMobile && this.mouse.targetX > -500) {
+            const dx = curX - this.mouse.targetX;
+            const dy = curY - this.mouse.targetY;
+            const dist = Math.hypot(dx, dy);
+            const repelRadius = 135;
+
+            if (dist < repelRadius && dist > 0) {
+              const force = Math.pow(1 - dist / repelRadius, 1.3) * 3.8;
+              s.velX += (dx / dist) * force;
+              s.velY += (dy / dist) * force;
+            }
+          }
+
+          // 2. Hooke's elastic spring force pulling star back to constellation shape
+          const springK = 0.048; // Elasticity returning to home position
+          const damping = 0.86;  // Damping preventing infinite oscillation
+
+          s.velX += (-s.dispX) * springK;
+          s.velY += (-s.dispY) * springK;
+
+          s.velX *= damping;
+          s.velY *= damping;
+
+          s.dispX += s.velX;
+          s.dispY += s.velY;
+
+          // Micro-damping clamp when settled at home
+          if (Math.abs(s.dispX) < 0.005 && Math.abs(s.velX) < 0.005) {
+            s.dispX = 0;
+            s.velX = 0;
+          }
+          if (Math.abs(s.dispY) < 0.005 && Math.abs(s.velY) < 0.005) {
+            s.dispY = 0;
+            s.velY = 0;
+          }
+
+          // Twinkle and energy luminescence when scattered
+          const twinkle = Math.sin(now * s.twinkleSpeed * 0.08 + s.twinklePhase);
+          const dispMag = Math.hypot(s.dispX, s.dispY);
+          const scatterGlow = Math.min(0.35, (dispMag / 50) * 0.35);
+          s.currentAlpha = Math.max(0.2, Math.min(1.0, s.baseAlpha + twinkle * 0.25 + scatterGlow));
+        }
+
+        // Draw Constellation Lines (Starlight connections that stretch dynamically when scattered)
+        this.ctx.save();
+        for (let e = 0; e < c.edges.length; e++) {
+          const s1 = c.stars[c.edges[e][0]];
+          const s2 = c.stars[c.edges[e][1]];
+          const x1 = c.cx + s1.dx + s1.dispX;
+          const y1 = c.cy + s1.dy + s1.dispY;
+          const x2 = c.cx + s2.dx + s2.dispX;
+          const y2 = c.cy + s2.dy + s2.dispY;
+
+          const restingDist = Math.hypot(s1.dx - s2.dx, s1.dy - s2.dy);
+          const currentDist = Math.hypot(x1 - x2, y1 - y2);
+          const stretch = currentDist / (restingDist || 1);
+
+          const lineAlpha = ((s1.currentAlpha + s2.currentAlpha) / 2) * (stretch > 1.9 ? 0.18 : 0.32);
+
+          this.ctx.beginPath();
+          this.ctx.moveTo(x1, y1);
+          this.ctx.lineTo(x2, y2);
+          this.ctx.strokeStyle = `rgba(${c.lineColor}, ${lineAlpha})`;
+          this.ctx.lineWidth = Math.max(0.4, 0.75 / (stretch * 0.5 + 0.5));
+          this.ctx.stroke();
+        }
+        this.ctx.restore();
+
+        // Draw Constellation Stars & 4-Point Lens Flares for Alpha Stars
+        for (let j = 0; j < c.stars.length; j++) {
+          const s = c.stars[j];
+          const sx = c.cx + s.dx + s.dispX;
+          const sy = c.cy + s.dy + s.dispY;
+
+          // Main Star Core
+          this.ctx.beginPath();
+          this.ctx.arc(sx, sy, s.r, 0, Math.PI * 2);
+          this.ctx.fillStyle = `rgba(${s.color}, ${s.currentAlpha})`;
+          this.ctx.fill();
+
+          // Alpha Star 4-point diffraction flare & ambient halo
+          if (s.isAlpha && s.currentAlpha > 0.4) {
+            this.ctx.save();
+            // Ambient soft glow halo
+            this.ctx.beginPath();
+            this.ctx.arc(sx, sy, s.r * 2.8, 0, Math.PI * 2);
+            this.ctx.fillStyle = `rgba(${s.color}, ${s.currentAlpha * 0.15})`;
+            this.ctx.fill();
+
+            // 4-point cross diffraction spikes
+            const spike = s.r * 3.5;
+            this.ctx.strokeStyle = `rgba(${s.color}, ${s.currentAlpha * 0.4})`;
+            this.ctx.lineWidth = 0.6;
+            this.ctx.beginPath();
+            this.ctx.moveTo(sx - spike, sy);
+            this.ctx.lineTo(sx + spike, sy);
+            this.ctx.moveTo(sx, sy - spike);
+            this.ctx.lineTo(sx, sy + spike);
+            this.ctx.stroke();
+            this.ctx.restore();
+          }
+        }
+
+        // Draw real-world constellation name label smoothly below cluster when near
+        let isHovered = false;
+        if (!this.isMobile && this.mouse.targetX > -500) {
+          const distToCenter = Math.hypot(this.mouse.targetX - c.cx, this.mouse.targetY - c.cy);
+          if (distToCenter < 160) isHovered = true;
+        }
+
+        const targetLabelAlpha = isHovered ? 0.65 : 0;
+        c.labelAlpha += (targetLabelAlpha - c.labelAlpha) * 0.08;
+        if (c.labelAlpha > 0.03) {
+          this.ctx.save();
+          this.ctx.font = '500 10px "JetBrains Mono", monospace';
+          this.ctx.fillStyle = `rgba(${c.lineColor}, ${c.labelAlpha})`;
+          this.ctx.textAlign = 'center';
+          this.ctx.fillText(c.name.toUpperCase(), c.cx, c.cy + 75);
+          this.ctx.restore();
+        }
+      }
+
+      // C. Rare Celestial Bright Comets (Every 28 - 45 seconds, magnificent glowing tails)
+      if (now - this.lastCometTime > 28000 + Math.random() * 17000) {
+        this.spawnBrightComet(now);
+      }
+
+      for (let i = this.comets.length - 1; i >= 0; i--) {
+        const comet = this.comets[i];
+        comet.x += comet.vx;
+        comet.y += comet.vy;
+        comet.life++;
+
+        // Graceful fade in and fade out
+        if (comet.life < 40) {
+          comet.alpha = (comet.life / 40) * comet.maxAlpha;
+        } else if (comet.life > comet.maxLife - 60) {
+          comet.alpha = ((comet.maxLife - comet.life) / 60) * comet.maxAlpha;
+        } else {
+          comet.alpha = comet.maxAlpha;
+        }
+
+        if (comet.life >= comet.maxLife || comet.y > h + 100 || comet.x < -150 || comet.x > w + 150) {
+          this.comets.splice(i, 1);
+          continue;
+        }
+
+        // Shed subtle stardust wake particles
+        if (comet.life % 4 === 0 && this.cometParticles.length < 35) {
+          this.cometParticles.push({
+            x: comet.x + (Math.random() - 0.5) * 6,
+            y: comet.y + (Math.random() - 0.5) * 6,
+            vx: -comet.vx * 0.08 + (Math.random() - 0.5) * 0.3,
+            vy: -comet.vy * 0.08 + (Math.random() - 0.5) * 0.3,
+            radius: Math.random() * 1.5 + 0.8,
+            alpha: comet.alpha * 0.7,
+            color: comet.colorIon,
+          });
+        }
+
+        const normV = Math.hypot(comet.vx, comet.vy);
+        const normVx = comet.vx / normV;
+        const normVy = comet.vy / normV;
+        const tailEndX = comet.x - normVx * comet.tailLength;
+        const tailEndY = comet.y - normVy * comet.tailLength;
+
+        this.ctx.save();
+
+        // 1. Wide Diffuse Dust Tail (Soft stardust plume)
+        const dustGrad = this.ctx.createLinearGradient(comet.x, comet.y, tailEndX, tailEndY);
+        dustGrad.addColorStop(0, `rgba(${comet.colorDust}, ${comet.alpha * 0.35})`);
+        dustGrad.addColorStop(0.3, `rgba(${comet.colorIon}, ${comet.alpha * 0.18})`);
+        dustGrad.addColorStop(1, 'rgba(99, 102, 241, 0)');
+        this.ctx.beginPath();
+        this.ctx.moveTo(comet.x, comet.y);
+        this.ctx.lineTo(tailEndX - normVy * 20, tailEndY + normVx * 20);
+        this.ctx.lineTo(tailEndX + normVy * 20, tailEndY - normVx * 20);
+        this.ctx.closePath();
+        this.ctx.fillStyle = dustGrad;
+        this.ctx.fill();
+
+        // 2. Razor-sharp Ion Gas Streamer Tail (Intense, straight core streamer)
+        const ionGrad = this.ctx.createLinearGradient(comet.x, comet.y, tailEndX, tailEndY);
+        ionGrad.addColorStop(0, `rgba(${comet.colorCore}, ${comet.alpha * 0.95})`);
+        ionGrad.addColorStop(0.15, `rgba(${comet.colorIon}, ${comet.alpha * 0.7})`);
+        ionGrad.addColorStop(0.6, `rgba(${comet.colorIon}, ${comet.alpha * 0.25})`);
+        ionGrad.addColorStop(1, 'rgba(99, 102, 241, 0)');
+        this.ctx.beginPath();
+        this.ctx.moveTo(comet.x, comet.y);
+        this.ctx.lineTo(tailEndX, tailEndY);
+        this.ctx.strokeStyle = ionGrad;
+        this.ctx.lineWidth = 3.2;
+        this.ctx.stroke();
+
+        // 3. Coma Halo (Luminous gas atmosphere)
+        const comaGrad = this.ctx.createRadialGradient(comet.x, comet.y, 0, comet.x, comet.y, 24);
+        comaGrad.addColorStop(0, `rgba(${comet.colorCore}, ${comet.alpha * 0.95})`);
+        comaGrad.addColorStop(0.3, `rgba(${comet.colorIon}, ${comet.alpha * 0.5})`);
+        comaGrad.addColorStop(1, `rgba(${comet.colorIon}, 0)`);
+        this.ctx.beginPath();
+        this.ctx.arc(comet.x, comet.y, 24, 0, Math.PI * 2);
+        this.ctx.fillStyle = comaGrad;
+        this.ctx.fill();
+
+        // 4. Blazing Nucleus Core
+        this.ctx.beginPath();
+        this.ctx.arc(comet.x, comet.y, 3.2, 0, Math.PI * 2);
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${comet.alpha})`;
+        this.ctx.shadowBlur = 14;
+        this.ctx.shadowColor = `rgba(${comet.colorIon}, 1)`;
+        this.ctx.fill();
+
+        // 5. 4-Point Starlight Flare on the nucleus
+        const flareLen = 14;
+        this.ctx.strokeStyle = `rgba(255, 255, 255, ${comet.alpha * 0.75})`;
+        this.ctx.lineWidth = 0.8;
+        this.ctx.beginPath();
+        this.ctx.moveTo(comet.x - flareLen, comet.y);
+        this.ctx.lineTo(comet.x + flareLen, comet.y);
+        this.ctx.moveTo(comet.x, comet.y - flareLen);
+        this.ctx.lineTo(comet.x + flareLen, comet.y);
+        this.ctx.stroke();
+
+        this.ctx.restore();
+      }
+
+      // Lingering comet stardust sparkles
+      for (let p = this.cometParticles.length - 1; p >= 0; p--) {
+        const cp = this.cometParticles[p];
+        cp.x += cp.vx;
+        cp.y += cp.vy;
+        cp.alpha -= 0.016;
+
+        if (cp.alpha <= 0) {
+          this.cometParticles.splice(p, 1);
+          continue;
+        }
+
+        this.ctx.beginPath();
+        this.ctx.arc(cp.x, cp.y, cp.radius, 0, Math.PI * 2);
+        this.ctx.fillStyle = `rgba(${cp.color}, ${cp.alpha})`;
+        this.ctx.fill();
       }
     }
 
@@ -1991,11 +2583,11 @@ class MotionFX {
   }
 }
 
-
 /* === Bundled: js/main.js === */
-﻿/**
+/**
  * @fileoverview Main entry point initializing the Portfolio MVC application.
  */
+
 
 
 
@@ -2021,6 +2613,5 @@ if (document.readyState === 'loading') {
 } else {
   bootstrap();
 }
-
 
 })();

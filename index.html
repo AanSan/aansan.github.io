@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Noviyan Hogy Andika S. – Junior Software Engineer</title>
 
   <!-- External Fonts -->
@@ -38,17 +38,17 @@
 </head>
 <body class="min-h-screen selection:bg-brand-500 selection:text-white relative">
 
-  <!-- Background Glow FX -->
-  <div class="fixed inset-0 pointer-events-none gradient-glow -z-10"></div>
+  <!-- Background Glow & Parallax Visual Orbs (Contained strictly within viewport to prevent horizontal shift) -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="absolute inset-0 gradient-glow"></div>
+    <div class="parallax-orb w-72 sm:w-96 h-72 sm:h-96 bg-indigo-600/15 top-10 -left-16 sm:-left-20" data-parallax-speed="0.06"></div>
+    <div class="parallax-orb w-64 sm:w-80 h-64 sm:h-80 bg-violet-600/15 top-[600px] -right-16 sm:-right-20" data-parallax-speed="-0.05"></div>
+    <div class="parallax-orb w-72 sm:w-96 h-72 sm:h-96 bg-cyan-600/10 top-[1300px] -left-20 sm:-left-32" data-parallax-speed="0.04"></div>
+  </div>
 
-  <!-- Parallax Floating Visual Orbs (Gentle ambient drift) -->
-  <div class="parallax-orb w-96 h-96 bg-indigo-600/15 top-10 -left-20" data-parallax-speed="0.06"></div>
-  <div class="parallax-orb w-80 h-80 bg-violet-600/15 top-[600px] -right-20" data-parallax-speed="-0.05"></div>
-  <div class="parallax-orb w-96 h-96 bg-cyan-600/10 top-[1300px] -left-32" data-parallax-speed="0.04"></div>
-
-  <!-- Sticky Header Bar -->
-  <header class="sticky top-0 z-50 w-full backdrop-blur-xl bg-[#0b0f19]/90 border-b border-slate-800/80 transition-all">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+  <!-- Fixed Freeze Navigation Bar (Always Pinned at Viewport Top) -->
+  <header class="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-xl bg-[#0b0f19]/90 border-b border-slate-800/80 transition-all">
+    <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
       <a href="#hero" class="font-mono text-sm sm:text-base font-semibold tracking-tight text-white hover:text-brand-400 transition-colors flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span>noviyan<span class="text-brand-400">.dev</span></span>
@@ -68,97 +68,157 @@
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
           </svg>
         </a>
-        <a href="mailto:aansan26@gmail.com" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-sm">
+        <a href="mailto:aansan26@gmail.com" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 sm:px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white transition-all shadow-sm">
           <span>Contact Me</span>
         </a>
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" type="button" class="md:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/60 focus:outline-none transition-colors" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg id="mobileMenuOpenIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+          <svg id="mobileMenuCloseIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/80 bg-[#0b0f19]/95 backdrop-blur-2xl transition-all duration-300">
+      <div class="px-4 py-3.5 space-y-1">
+        <a href="#projects" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+          <span class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+            <span>Projects</span>
+          </span>
+          <span class="text-xs font-mono text-slate-500">01</span>
+        </a>
+        <a href="#cli-lab" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+          <span class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+            <span>CLI Lab</span>
+          </span>
+          <span class="text-xs font-mono text-slate-500">02</span>
+        </a>
+        <a href="#skills" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+          <span class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+            <span>Skills</span>
+          </span>
+          <span class="text-xs font-mono text-slate-500">03</span>
+        </a>
+        <a href="#certifications" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+          <span class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+            <span>Certifications</span>
+          </span>
+          <span class="text-xs font-mono text-slate-500">04</span>
+        </a>
+        <a href="#about" class="mobile-nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors">
+          <span class="flex items-center gap-2.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span>
+            <span>Experience</span>
+          </span>
+          <span class="text-xs font-mono text-slate-500">05</span>
+        </a>
+
+        <div class="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400 px-2 mt-2">
+          <span class="flex items-center gap-1.5">
+            <span class="radar-live-dot scale-75"></span>
+            <span>Ready for Remote</span>
+          </span>
+          <a href="mailto:aansan26@gmail.com" class="text-brand-400 hover:text-brand-300 font-sans">aansan26@gmail.com</a>
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-20 py-6 sm:py-10">
+  <main class="w-full max-w-6xl mx-auto px-4 sm:px-6 space-y-12 sm:space-y-20 pt-16 sm:pt-20 pb-4 sm:pb-10 min-w-0">
 
     <!-- Hero Section (Bento Grid 2.0) -->
-    <section id="hero" class="relative pt-2 sm:pt-4 scroll-mt-16 sm:scroll-mt-20">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+    <section id="hero" class="relative pt-2 sm:pt-4 scroll-mt-16 sm:scroll-mt-20 w-full min-w-0">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch w-full min-w-0">
         
         <!-- Bento Main Unit (Span 8) -->
-        <div class="lg:col-span-8 card-glass bento-card p-6 sm:p-9 flex flex-col justify-between" data-parallax-speed="0.012">
+        <div class="lg:col-span-8 card-glass bento-card p-5 sm:p-9 flex flex-col justify-between w-full min-w-0" data-parallax-speed="0.012">
           <div>
-            <div id="heroAvailability" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-6 shadow-sm">
+            <div id="heroAvailability" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/70 text-xs font-mono text-emerald-400 mb-5 sm:mb-6 shadow-sm">
               <span class="radar-live-dot"></span>
               <span>Available for Remote Roles</span>
             </div>
 
-            <h1 id="heroTitle" class="holo-text text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight pb-1 mb-5">
+            <h1 id="heroTitle" class="holo-text text-2xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight pb-1 mb-4 sm:mb-5">
               Noviyan Hogy Andika Suryanto
             </h1>
 
-            <p id="heroHeadline" class="text-lg sm:text-xl font-medium text-slate-300 max-w-2xl mb-4 leading-relaxed">
+            <p id="heroHeadline" class="text-base sm:text-xl font-medium text-slate-300 max-w-2xl mb-3 sm:mb-4 leading-relaxed">
               <span class="text-white">Junior Software Engineer</span> focused on modern JavaScript, clean front-end architecture, and AI-accelerated tooling.
             </p>
 
-            <p id="heroBio" class="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed mb-8">
+            <p id="heroBio" class="text-xs sm:text-base text-slate-400 max-w-2xl leading-relaxed mb-6 sm:mb-8">
               Combining rigorous discipline from public sector data integrity with self-driven software engineering. Actively solving real-world friction through browser utilities, web performance optimization, and pragmatic development.
             </p>
           </div>
 
           <!-- Action Buttons -->
-          <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-800/60">
-            <a href="#projects" class="px-5 py-2.5 rounded-xl bg-white text-slate-950 font-semibold text-sm hover:bg-slate-200 transition-colors shadow">
-              Explore Projects
-            </a>
-            <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-medium text-sm transition-colors flex items-center gap-2 border border-slate-700/60">
-              <span>GitHub Activity</span>
-              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-            </a>
-            <button id="copyEmailBtn" class="px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-slate-500 text-slate-300 text-sm font-mono flex items-center gap-2 transition-all" type="button">
+          <div class="grid grid-cols-1 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3 pt-4 border-t border-slate-800/60 w-full">
+            <div class="grid grid-cols-2 sm:flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+              <a href="#projects" class="px-4 sm:px-5 py-2.5 rounded-xl bg-white text-slate-950 font-semibold text-xs sm:text-sm hover:bg-slate-200 transition-colors shadow flex items-center justify-center text-center">
+                Explore Projects
+              </a>
+              <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="px-4 sm:px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-medium text-xs sm:text-sm transition-colors flex items-center justify-center gap-1.5 sm:gap-2 border border-slate-700/60 text-center">
+                <span>GitHub</span>
+                <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+            <button id="copyEmailBtn" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-slate-500 text-slate-300 text-xs sm:text-sm font-mono flex items-center justify-center gap-2 transition-all active:scale-[0.98]" type="button">
               <span id="copyEmailText">aansan26@gmail.com</span>
-              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             </button>
           </div>
         </div>
 
         <!-- Bento Aside Modules (Span 4) -->
-        <div class="lg:col-span-4 flex flex-col gap-6">
+        <div class="lg:col-span-4 flex flex-col gap-4 sm:gap-6 w-full min-w-0">
           
           <!-- Bento Widget 1: Radar Live Status & Clock -->
-          <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="0.015">
-            <div class="flex items-center justify-between mb-4">
+          <div class="card-glass bento-card p-5 sm:p-6 flex flex-col justify-between w-full min-w-0" data-parallax-speed="0.015">
+            <div class="flex items-center justify-between mb-3 sm:mb-4">
               <span class="text-xs font-mono uppercase tracking-widest text-slate-400">Live Status</span>
               <span class="radar-live-dot"></span>
             </div>
 
-            <div class="space-y-3">
-              <div class="text-2xl font-bold text-white tracking-tight">Active &amp; Ready</div>
+            <div class="space-y-2 sm:space-y-3">
+              <div class="text-xl sm:text-2xl font-bold text-white tracking-tight">Active &amp; Ready</div>
               <p class="text-xs text-slate-400 leading-relaxed">
                 Open to Remote Software Engineer roles, frontend development, and workflow automation tooling.
               </p>
             </div>
 
-            <div class="mt-5 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
+            <div class="mt-4 sm:mt-5 pt-3 sm:pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
               <span class="text-slate-400">Timezone</span>
               <span id="heroLiveClock" class="text-brand-300 font-semibold">UTC+7 • Jakarta (WIB)</span>
             </div>
           </div>
 
           <!-- Bento Widget 2: Engineering Philosophy & Architecture -->
-          <div class="card-glass bento-card p-6 flex flex-col justify-between" data-parallax-speed="-0.012">
-            <div class="flex items-center justify-between mb-4">
+          <div class="card-glass bento-card p-5 sm:p-6 flex flex-col justify-between w-full min-w-0" data-parallax-speed="-0.012">
+            <div class="flex items-center justify-between mb-3 sm:mb-4">
               <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Pillars</span>
               <span class="text-xs font-mono text-slate-500">v2.0</span>
             </div>
 
-            <div class="space-y-2 mb-4">
-              <div class="text-lg font-bold text-white">Pragmatic &amp; Performant</div>
+            <div class="space-y-1.5 sm:space-y-2 mb-3 sm:mb-4">
+              <div class="text-base sm:text-lg font-bold text-white">Pragmatic &amp; Performant</div>
               <p class="text-xs text-slate-400 leading-relaxed">
                 Zero-bloat philosophy. High maintainability using clean MVC patterns and native browser APIs.
               </p>
             </div>
 
-            <div class="flex flex-wrap gap-2 pt-3 border-t border-slate-800/80">
-              <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-indigo-950/60 text-indigo-300 border border-indigo-800/40">Vanilla JS</span>
-              <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-sky-950/60 text-sky-300 border border-sky-800/40">Modular MVC</span>
-              <span class="text-[11px] font-mono px-2.5 py-1 rounded-md bg-violet-950/60 text-violet-300 border border-violet-800/40">AI Accelerated</span>
+            <div class="flex flex-wrap gap-1.5 sm:gap-2 pt-3 border-t border-slate-800/80">
+              <span class="text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-md bg-indigo-950/60 text-indigo-300 border border-indigo-800/40">Vanilla JS</span>
+              <span class="text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-md bg-sky-950/60 text-sky-300 border border-sky-800/40">Modular MVC</span>
+              <span class="text-[10px] sm:text-[11px] font-mono px-2.5 py-1 rounded-md bg-violet-950/60 text-violet-300 border border-violet-800/40">AI Accelerated</span>
             </div>
           </div>
 
@@ -168,7 +228,7 @@
     </section>
 
     <!-- Featured Projects Section (Alternating Dual Flagship Showcase) -->
-    <section id="projects" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] py-6 sm:py-10">
+    <section id="projects" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] py-6 sm:py-10 w-full min-w-0">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
           <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Featured Showcase</span>
@@ -178,11 +238,11 @@
       </div>
 
       <!-- Dynamically Rendered by View (Alternating Zigzag Showcase) -->
-      <div id="projectsContainer" class="space-y-12 sm:space-y-16"></div>
+      <div id="projectsContainer" class="space-y-12 sm:space-y-16 w-full min-w-0"></div>
     </section>
 
     <!-- Terminal & Algorithmic Engineering Lab (Interactive CLI Simulator & Code Inspector) -->
-    <section id="cli-lab" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] py-6 sm:py-10">
+    <section id="cli-lab" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] py-6 sm:py-10 w-full min-w-0">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
           <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Systems &amp; Algorithms</span>
@@ -192,48 +252,48 @@
       </div>
 
       <!-- Dynamically Rendered by View (Interactive Terminal Simulator & Architecture Inspector) -->
-      <div id="cliLabContainer"></div>
+      <div id="cliLabContainer" class="w-full min-w-0"></div>
     </section>
 
     <!-- Technical Skills Section -->
-    <section id="skills" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem]">
+    <section id="skills" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] w-full min-w-0">
       <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Capabilities</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Technical Skills &amp; Stack</h2>
       </div>
 
       <!-- Dynamically Rendered by View -->
-      <div id="skillsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+      <div id="skillsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full min-w-0"></div>
     </section>
 
     <!-- Verified Certifications -->
-    <section id="certifications" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem]">
+    <section id="certifications" class="space-y-8 scroll-mt-16 sm:scroll-mt-[4.5rem] w-full min-w-0">
       <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Credentials</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Verified Certifications</h2>
       </div>
 
       <!-- Dynamically Rendered by View -->
-      <div id="certificationsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+      <div id="certificationsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-5 w-full min-w-0"></div>
     </section>
 
     <!-- Professional Background & Education -->
-    <section id="about" class="space-y-6 scroll-mt-16 sm:scroll-mt-[4.5rem]">
+    <section id="about" class="space-y-6 scroll-mt-16 sm:scroll-mt-[4.5rem] w-full min-w-0">
       <div class="border-b border-slate-800 pb-4">
         <span class="text-xs font-mono uppercase tracking-widest text-brand-400">Background</span>
         <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Experience &amp; Foundation</h2>
       </div>
 
       <!-- Dynamically Rendered by View -->
-      <div id="experienceContainer" class="card-glass bento-card p-6 sm:p-8 space-y-6" data-parallax-speed="0.01"></div>
+      <div id="experienceContainer" class="card-glass bento-card p-6 sm:p-8 space-y-6 w-full min-w-0" data-parallax-speed="0.01"></div>
     </section>
 
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-800/80 py-10 mt-20 text-center text-xs text-slate-500 font-mono">
-    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p>© 2026 Noviyan Hogy Andika Suryanto. Built with HTML5 &amp; Tailwind CSS.</p>
+  <footer class="border-t border-slate-800/80 py-8 sm:py-10 mt-16 sm:mt-20 text-center text-xs text-slate-500 font-mono w-full min-w-0 overflow-hidden">
+    <div class="w-full max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 Noviyan Hogy Andika Suryanto.</p>
       <div class="flex items-center gap-4 text-slate-400">
         <a href="https://github.com/aansan" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub</a>
         <a href="https://fnstory.my.id" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">FNStory</a>
@@ -241,6 +301,13 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating Back to Top Button for Mobile & Desktop -->
+  <button id="backToTopBtn" type="button" class="fixed bottom-5 right-5 z-40 p-3 rounded-full bg-slate-900/90 border border-slate-700/80 text-slate-300 hover:text-white hover:border-brand-400 shadow-xl backdrop-blur-xl transition-all duration-300 opacity-0 pointer-events-none translate-y-3" aria-label="Scroll back to top">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+    </svg>
+  </button>
 
   <!-- Application Entry Point (Unified Bundle supporting file:// and web servers) -->
   <script src="./js/bundle.js"></script>
