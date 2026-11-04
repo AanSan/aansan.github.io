@@ -288,22 +288,22 @@ while (inputMenu !== 4) {
     this.certifications = [
       {
         id: 'a106b734',
-        track: 'Codédex — The Origins Track',
+        track: 'Codédex — Web Development',
         title: 'The Origins: JavaScript',
         description: 'Demonstrated mastery in algorithm problem-solving, data structures, and asynchronous control flows through verified projects.',
         verifyUrl: 'https://www.codedex.io/certificates/a106b734-2932-4fdd-8424-7a9c65ea0c3e',
       },
       {
-        id: '19a72da3',
-        track: 'Codédex — The Origins Track',
-        title: 'The Origins: CSS',
-        description: 'Certified on box model layout systems, responsive media queries, Flexbox, Grid architecture, and CSS variables.',
+        id: '181992574',
+        track: 'Codédex — Web Development',
+        title: 'The Origins II: CSS',
+        description: 'Certified on box model layout systems, selectors, properties, Flexbox, responsive layouts, and modern styling architectures.',
         verifyUrl: 'https://www.codedex.io/certificates/19a72da3-98fa-4736-8538-4bbe90ef8502',
       },
       {
-        id: '7312686d',
-        track: 'Codédex — The Origins Track',
-        title: 'The Origins: HTML',
+        id: '181988530',
+        track: 'Codédex — Web Development',
+        title: 'The Origins I: HTML',
         description: 'Comprehensive coverage of modern semantic elements, accessible document structures, and clean form processing.',
         verifyUrl: 'https://www.codedex.io/certificates/7312686d-3ea2-474a-b3d1-d3581ed1eaa0',
       },
@@ -316,8 +316,13 @@ while (inputMenu !== 4) {
     this.experiences = [
       {
         role: 'Data & Systems Custodian — Pemda DIY',
-        period: '03/2021 – Present | Yogyakarta',
+        period: '03/2021 – Present | Yogyakarta, Indonesia',
         description: 'Managing public asset data verification, record integrity, and HR performance tracking across governmental platforms. Actively applying automated web solutions and scripts to minimize clerical errors and improve office operations.',
+      },
+      {
+        role: 'Front-End Engineering Student — Koding Up',
+        period: '2026 | Technical Upskilling',
+        description: 'Undergoing hands-on coding training covering modern JavaScript (ES6+, DOM, asynchronous paradigms), modular programming architectures (MVC), and introductory React & TypeScript.',
       },
       {
         role: 'Polytechnic of State Finance STAN (PKN STAN)',
